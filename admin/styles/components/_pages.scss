@@ -36,6 +36,9 @@
         .ps-main__wrapper {
             padding: 30px;
         }
+        .framestrip {
+            max-width: calc(100vw - 400px);
+        }
     }
 
     @media screen and (min-width: 1440px) {
