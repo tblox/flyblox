@@ -14,7 +14,7 @@ const TableCustomerItems = ({ title_contains }) => {
     useEffect(async () => {
         const res = await LandingPageRepository.getLandingPages({ title_contains })
         if (res) {
-            dispatch(setLandingPage(res.data.data))
+            // dispatch(setLandingPage(res.data.data))
         }
     }, [title_contains])
 

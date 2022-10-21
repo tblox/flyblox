@@ -2,7 +2,8 @@
     display: none;
     flex-flow: row nowrap;
     justify-content: space-between;
-    margin-bottom: 70px;
+    margin-bottom: 30px;
+    padding: 0 30px;
 
     > * {
         flex-basis: 100%;
@@ -179,5 +180,43 @@
 
     &.active {
         @include show;
+    }
+}
+
+.header-landing {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 30px;
+
+    .button {
+        border-radius: 5px;
+        padding: 12px 32px;
+        display: flex;
+        align-items: center;
+        border: none;
+        
+
+        & > svg { 
+            margin-right: 4px;
+            font-size: 18px;
+        }
+    }
+
+    &__live {
+        color: #fff;
+        background-color: #00CF69;
+    }
+    &__notlive {
+        color: #fff;
+        background-color: #FF7F48;
+    }
+
+    &__group {
+        display: flex;
+
+        & > .button {
+            background-color: #F6F6F6;
+            margin-left: 12px;
+        }
     }
 }

@@ -7,12 +7,20 @@ import FormSearchSimple from '~/components/shared/forms/FormSearchSimple'
 import { connect, useDispatch } from 'react-redux'
 import { toggleDrawerMenu } from '~/store/app/action'
 import FormCreateLadingPages from '~/components/shared/forms/FormCreateLandingPages'
+import { useRouter } from 'next/router'
+
 const LandingPage = () => {
     const dispatch = useDispatch()
     const [title_contains, setTitle_contains] = useState('')
     useEffect(() => {
         dispatch(toggleDrawerMenu(false))
     }, [])
+
+    const router = useRouter();
+
+    const handleChangeUrl = () => {
+        router.push('/landingpages/layout')
+    }
     return (
         <ContainerDefault>
             <HeaderDashboard
@@ -23,14 +31,18 @@ const LandingPage = () => {
                 <div className='ps-section__left'>
                     <div className='ps-section__header'>
                         <FormSearchSimple onChange={setTitle_contains} />
+                        <div className="button ps-section__group"> 
+                            <button onClick={handleChangeUrl}>Add</button>
+                            <button onClick={handleChangeUrl}>Edit</button>
+                        </div>
                     </div>
                     <div className='ps-section__content'>
                         <TableLandingPages title_contains={title_contains} />
                     </div>
                 </div>
-                <div className='ps-section__right'>
+                {/* <div className='ps-section__right'>
                     <FormCreateLadingPages />
-                </div>
+                </div> */}
             </section>
         </ContainerDefault>
     )
