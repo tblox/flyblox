@@ -42,7 +42,8 @@ const MenuSidebar = () => {
     },
     {
       text: 'Landing Pages',
-      url: '/landingpages',
+      url: '/landingpages/layout',
+      sub_url: ['/landingpages/layout', '/landingpages/template', '/landingpages/live'],
       icon: 'icon-page-break',
     },
   ]
@@ -52,7 +53,7 @@ const MenuSidebar = () => {
       {menuItems.map((item, index) => (
         <li
           key={index}
-          className={router.pathname === item.url ? 'active' : ''}
+          className={router.pathname === item.url || item.sub_url?.includes(router.pathname)? 'active' : ''}
         >
           <Link href={item.url}>
             <a>

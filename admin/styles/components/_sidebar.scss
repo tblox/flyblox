@@ -3,10 +3,10 @@
   padding: 0;
   min-height: 100vh;
   background: #1c1f58;
-  width: 35%;
+  width: 95px;
   z-index: 2;
   padding-top: 42px;
-  padding-left: 10px;
+  padding-left: 7px;
   //    box-sizing: initial;
 
   & > li {
@@ -14,19 +14,19 @@
     position: relative;
     list-style: none;
     width: 100%;
-    margin-bottom: 24px;
-    border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px;
+    padding: 10px 0;
 
     &:hover {
         color: #fff
     }
 
     &.active {
-        background: #01043A;
 
         & > a {
             color: #fff;
+            background: #01043A;
+            border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px;
         }
 
         & > b:nth-child(1),

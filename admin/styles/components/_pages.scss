@@ -13,20 +13,22 @@
 
   @media screen and (min-width: 1200px) {
     display: flex;
-    position: fixed;
+    // position: fixed;
     align-items: stretch;
     padding-top: 0;
     min-height: 100vh;
 
     .ps-main__sidebar {
-      padding: 60px 0 0 30px;
-      width: 10%;
+      padding: 15px;
+      width: 200px;
+      position: fixed;
+      height: 100%;
       display: block;
       background-color: $color-bg-sidebar;
     }
 
     .ps-main__wrapper {
-      // padding: 30px;
+      margin-left: 200px;
       flex: 1;
     }
     
@@ -37,7 +39,6 @@
 
   @media screen and (min-width: 1680px) {
     .ps-main__wrapper {
-      padding: 60px 0;
     }
   }
 }
@@ -59,4 +60,27 @@
       max-width: 100% !important;
     }
   }
+}
+
+::-webkit-scrollbar-track
+{
+	border-radius: 10px;
+  width: 10px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+  width: 8px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+	background-color: #939da6;
+}
+
+::-webkit-file-upload-button {
+  cursor:pointer;
 }

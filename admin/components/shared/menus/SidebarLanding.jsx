@@ -1,52 +1,51 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { HiTemplate } from "react-icons/hi";
 import { RiLayoutMasonryFill } from "react-icons/ri";
 import { FaPager } from "react-icons/fa";
 import Link from "next/link";
+import { useRouter } from 'next/router'
 
 SidebarLanding.propTypes = {};
 
 const sidebarItems = [
   {
     id: 1,
-    title: "Template",
-    url: "/landingpages/layout",
-    icon: <HiTemplate />,
+    title: "Live Pages",
+    url: "/landingpages/live",
+    icon: <FaPager />,
   },
   {
     id: 2,
+    title: "Template",
+    url: "/landingpages/template",
+    icon: <HiTemplate />,
+  },
+  {
+    id: 3,
     title: "Layout",
     url: "/landingpages/layout",
     icon: <RiLayoutMasonryFill />,
   },
-  {
-    id: 3,
-    title: "Live Pages",
-    url: "/landingpages/layout",
-    icon: <FaPager />,
-  },
+
 ];
 
 function SidebarLanding(props) {
-  const [isActive, setIsActive] = React.useState(1);
+  const router = useRouter()
 
   return (
     <ul className="sidebar">
-     
         {sidebarItems.map((item, index) => (
         <li
           key={index}
           id={item.id}
-          onClick={() => setIsActive(item.id)}
-          className={isActive === item.id ? "active" : ""}
+          className={router.pathname.includes(item.url) ? 'active' : ''}
         >
-          <b></b>
-          <b></b>
+          <Link href={item.url}>
           <a>
             {item.icon}
             {item.title}
           </a>
+          </Link>
         </li>
       ))}
      
