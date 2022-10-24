@@ -8,12 +8,17 @@ import { connect, useDispatch } from 'react-redux'
 import { toggleDrawerMenu } from '~/store/app/action'
 import FormCreateLadingPages from '~/components/shared/forms/FormCreateLandingPages'
 import { useRouter } from 'next/router'
+import useGetLandingPage from "~/hooks/useLandingPages";
 
 const LandingPage = () => {
     const dispatch = useDispatch()
     const [title_contains, setTitle_contains] = useState('')
+    const { loading, getAllTemplate } = useGetLandingPage();
+
+
     useEffect(() => {
         dispatch(toggleDrawerMenu(false))
+        getAllTemplate()
     }, [])
 
     const router = useRouter();

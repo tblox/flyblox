@@ -1,7 +1,8 @@
 import axios from "axios";
 import getToken from "~/utilities/GetToken"
 export const isGrapql = true;
-const baseDomain = `${process.env.baseURL}/api/admin/`;
+const apiUrl = process.env.baseURL
+const baseDomain = `${apiUrl}/admin/`;
 /*const baseDomain = 'http://45.76.97.89:1337';*/
 const authorization_prefix = "Bearer ";
 export const customHeaders = {
@@ -11,7 +12,7 @@ export const customHeaders = {
 };
 
 export const baseUrl = `${baseDomain}`;
-
+export const baseTemplateUrl = `${apiUrl}/template/`
 export default axios.create({
   baseUrl,
   headers: customHeaders,

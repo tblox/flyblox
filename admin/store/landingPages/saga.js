@@ -1,6 +1,6 @@
 import { all, call, put, takeEvery, takeLatest } from "redux-saga/effects"
 import { notification } from "antd"
-import { actionTypes, setLandingPage } from "./action"
+import { actionTypes, getAllTemplateFailed, getAllTemplateSuccess, setLandingPage } from "./action"
 import Router from "next/router"
 import LandingPageRepository from "~/repositories/LandingPageRepository"
 
@@ -94,8 +94,23 @@ function* editLandingPageSaga(payload) {
     }
 }
 
+function* getAllTemplate() {
+    try {
+        const res = yield call(LandingPageRepository.getAllTemplate)
+        if (res) {
+            yield put(getAllTemplateSuccess(res.data));
+        } else {
+            yield put(getAllTemplateFailed(res));
+            modalError("error", "Error Occured at Server Side")
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 export default function* rootSaga() {
     yield all([takeEvery(actionTypes.GET_LANDING_PAGE, getLandingPage)])
+    yield all([takeEvery(actionTypes.GET_ALL_TEMPLATE, getAllTemplate)])
     yield all([takeEvery(actionTypes.ADD_LANDING_PAGE, addLandingPageSaga)])
     yield all([takeEvery(actionTypes.EDIT_LANDING_PAGE, editLandingPageSaga)])
     yield all([takeEvery(actionTypes.REMOVE_LANDING_PAGE, removeLandingPageSaga)])

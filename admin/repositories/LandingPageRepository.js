@@ -3,6 +3,7 @@ import Repository, {
     basePostUrl,
     serializeQuery,
     baseUrl,
+    baseTemplateUrl,
 } from "./Repository"
 
 class LandingPageRepository {
@@ -25,6 +26,16 @@ class LandingPageRepository {
         const reponse = await Local.get(baseUrl + endPoint)
             .then((response) => {
                 return response.data.data
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }))
+        return reponse
+    }
+
+    async getAllTemplate() {
+        const endPoint = `get__template`
+        const reponse = await Local.get(baseTemplateUrl + endPoint)
+            .then((response) => {
+                return response
             })
             .catch((error) => ({ error: JSON.stringify(error) }))
         return reponse
