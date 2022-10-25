@@ -22,7 +22,7 @@ const LandingPage = () => {
     const router = useRouter();
 
     const handleChangeUrl = () => {
-        router.push('/landingpages/layout')
+        router.push('/landingpages/new')
     }
     return (
         <ContainerDefault>

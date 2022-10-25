@@ -43,10 +43,12 @@ const MenuSidebar = () => {
     {
       text: 'Landing Pages',
       url: '/landingpages',
-      sub_url: ['/landingpages/layout', '/landingpages/template', '/landingpages/live'],
+      sub_url: ['/landingpages/new', '/landingpages/[pid]'],
       icon: 'icon-page-break',
     },
   ]
+
+  console.log(router.pathname)
 
   return (
     <ul className='menu'>

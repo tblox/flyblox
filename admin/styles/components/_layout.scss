@@ -120,6 +120,7 @@
       height: calc(100% - 196px);
       width: 100%;
       padding: 50px;
+      position: relative;
 
       & > div.content-default {
         display: flex;

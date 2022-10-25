@@ -3,7 +3,10 @@ import { actionTypes } from "./action";
 export const initState = {
   landingPage: [],
   templates: [],
-  currentPage: null,
+  currentPage: {
+    name: "abc",
+    sections: [],
+  },
   currentSection: null,
   loadingTemplates: false,
 };
@@ -34,13 +37,22 @@ function reducer(state = initState, actions) {
     case actionTypes.SET_CURRENT_PAGE:
       return {
         ...state,
-        currentPage: actions.payload
+        currentPage: actions.payload,
+      };
+    case actionTypes.SET_CURRENT_SECTION:
+      const section = actions.payload;
+      const page = JSON.parse(JSON.stringify(state.currentPage));
+      const existedSectionIndex = page.sections.findIndex((s) => s._id === section._id);
+      if (existedSectionIndex !== -1) {
+        page.sections[existedSectionIndex] = actions.payload
+      } else {
+        page.sections.push(section);
       }
-      case actionTypes.SET_CURRENT_SECTION:
-        return {
-          ...state,
-          currentSection: actions.payload
-        }
+      return {
+        ...state,
+        currentPage: page,
+        currentSection: actions.payload,
+      };
     default:
       return state;
   }
