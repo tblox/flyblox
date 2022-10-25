@@ -14,7 +14,7 @@
     position: relative;
     list-style: none;
     width: 100%;
-    padding: 10px 0;
+    margin: 10px 0;
 
     &:hover {
         color: #fff
@@ -92,4 +92,7 @@
       }
     }
   }
+}
+.m-4 {
+    margin: 0 24px !important;
 }

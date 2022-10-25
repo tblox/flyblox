@@ -6,6 +6,8 @@ export const actionTypes = {
     GET_ALL_TEMPLATE: "GET_ALL_TEMPLATE",
     GET_ALL_TEMPLATE_SUCCESS: "GET_ALL_TEMPLATE_SUCCESS",
     GET_ALL_TEMPLATE_FAILED: "GET_ALL_TEMPLATE_FAILED",
+    SET_CURRENT_PAGE: "SET_CURRENT_PAGE",
+    SET_CURRENT_SECTION: "SET_CURRENT_SECTION",
 }
 
 export function addLandingPage(payload) {
@@ -34,4 +36,12 @@ export function getAllTemplateSuccess(payload) {
 
 export function getAllTemplateFailed(payload) {
     return { type: actionTypes.GET_ALL_TEMPLATE_FAILED, payload }
+}
+
+export function setCurrentPage(payload) {
+    return { type: actionTypes.SET_CURRENT_PAGE, payload }
+}
+
+export function setCurrentSection(payload) {
+    return { type: actionTypes.SET_CURRENT_SECTION, payload }
 }

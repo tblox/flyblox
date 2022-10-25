@@ -10,21 +10,21 @@ SidebarLanding.propTypes = {};
 const sidebarItems = [
   {
     id: 1,
-    title: "Live Pages",
+    title: "Layout",
+    url: "/landingpages/layout",
+    icon: <RiLayoutMasonryFill />,
+  },
+  {
+    id: 2,
+    title: "Image",
     url: "/landingpages/live",
     icon: <FaPager />,
   },
   {
-    id: 2,
+    id: 3,
     title: "Template",
     url: "/landingpages/template",
     icon: <HiTemplate />,
-  },
-  {
-    id: 3,
-    title: "Layout",
-    url: "/landingpages/layout",
-    icon: <RiLayoutMasonryFill />,
   },
 
 ];
@@ -40,6 +40,8 @@ function SidebarLanding(props) {
           id={item.id}
           className={router.pathname.includes(item.url) ? 'active' : ''}
         >
+          <b></b>
+          <b></b>
           <Link href={item.url}>
           <a>
             {item.icon}

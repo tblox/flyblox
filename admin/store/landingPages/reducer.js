@@ -3,6 +3,8 @@ import { actionTypes } from "./action";
 export const initState = {
   landingPage: [],
   templates: [],
+  currentPage: null,
+  currentSection: null,
   loadingTemplates: false,
 };
 
@@ -29,6 +31,16 @@ function reducer(state = initState, actions) {
         ...state,
         loadingTemplates: false,
       };
+    case actionTypes.SET_CURRENT_PAGE:
+      return {
+        ...state,
+        currentPage: actions.payload
+      }
+      case actionTypes.SET_CURRENT_SECTION:
+        return {
+          ...state,
+          currentSection: actions.payload
+        }
     default:
       return state;
   }

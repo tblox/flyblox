@@ -8,6 +8,9 @@ import { BiUpload } from "react-icons/bi";
 import { BsFillPlusSquareFill } from "react-icons/bs";
 import ContainerDefault from "~/components/layouts/ContainerDefault";
 import HeaderDashboard from "~/components/shared/headers/HeaderDashboard";
+import { useDispatch } from "react-redux";
+import { setCurrentSection } from "~/store/landingPages/action";
+import { useSelector } from "react-redux";
 
 Layout.propTypes = {};
 
@@ -38,13 +41,16 @@ const fakeData = [
 ];
 
 function Layout(props) {
-  const [currentSection, setCurrentSection] = React.useState(null);
+
+  const dispatch = useDispatch();
+
   const [listSection, setListSection] = React.useState(fakeData);
   const [selectedFile, setSelectedFile] = React.useState(null);
   const [textColor, setTextColor] = React.useState("#000000");
   const [colorHex, setColorHex] = React.useState("#FAFD37");
   //   const [urlImage, setUrlImage] = React.useState("");
 
+  const {currentPage, currentSection} = useSelector(store => store.landingPage)
   const changeHandler = (event) => {
     if (event.target.files[0]) setSelectedFile(event.target.files[0]);
 
@@ -92,7 +98,8 @@ function Layout(props) {
           </div> */}
 
             <p>Layout</p>
-            <div className="form__control">
+            {
+              <div className="form__control">
               <div className="form__control__header">
                 <p>Button</p>
                 <BsFillPlusSquareFill />
@@ -201,6 +208,7 @@ function Layout(props) {
                 </div>
               </div>
             </div>
+            }
           </div>
         </div>
 
@@ -224,7 +232,7 @@ function Layout(props) {
           <FrameStrip
             listFrame={listSection}
             currentFrame={currentSection}
-            setCurrentFrame={setCurrentSection}
+            setCurrentFrame={frame => dispatch(setCurrentSection(frame))}
             onAddNewFrame={onAddNewSection}
           />
         </div>

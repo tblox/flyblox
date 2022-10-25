@@ -60,6 +60,7 @@
 }
 
 .ps-dashboard {
+  padding: 20px;
   .ps-card {
     margin-bottom: 30px;
   }
@@ -83,6 +84,7 @@
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: flex-start;
+    margin-top: 52px;
     > * {
       flex-basis: 100%;
     }
@@ -100,6 +102,7 @@
 
 .ps-items-listing {
   min-height: calc(100vh - 150px);
+  padding: 20px;
 
   .ps-section__actions {
     display: flex;
@@ -143,12 +146,11 @@
   }
 
   @media screen and (min-width: 1280px) {
+    margin-top: 52px;
     .ps-section__header {
       display: flex;
       width: 100%;
       padding-bottom: 20px;
-     
-     
 
       &.simple {
         > * {

@@ -13,12 +13,10 @@ import useGetLandingPage from "~/hooks/useLandingPages";
 const LandingPage = () => {
     const dispatch = useDispatch()
     const [title_contains, setTitle_contains] = useState('')
-    const { loading, getAllTemplate } = useGetLandingPage();
 
 
     useEffect(() => {
         dispatch(toggleDrawerMenu(false))
-        getAllTemplate()
     }, [])
 
     const router = useRouter();

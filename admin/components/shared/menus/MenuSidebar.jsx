@@ -42,7 +42,7 @@ const MenuSidebar = () => {
     },
     {
       text: 'Landing Pages',
-      url: '/landingpages/layout',
+      url: '/landingpages',
       sub_url: ['/landingpages/layout', '/landingpages/template', '/landingpages/live'],
       icon: 'icon-page-break',
     },
