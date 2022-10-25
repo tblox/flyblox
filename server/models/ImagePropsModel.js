@@ -9,10 +9,10 @@ const ImagePropsSchema = new mongoose.Schema({
     ref: 'Sections'
   },
   imageUrl: {
-    type: string,
+    type: String,
+    required: true,
   }
   
 })
-
 
 module.exports = ImageProps = mongoose.model('ImageProps', ImagePropsSchema)

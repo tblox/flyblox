@@ -19,8 +19,10 @@ var Cron = require('cron').CronJob
 // const ladingpageRoutes = require('./routes/ladingpage')
 // const Tokens = require('./models/Token')
 
-const templateRoutes = require('./routes/templateRouter'
-)
+const templateRoutes = require('./routes/templateRouter')
+const imagePropRoutes = require('./routes/imagePropRouter')
+const sectionRoutes = require('./routes/sectionRouter')
+
 
 //Crons Jobs
 // const tokensCronJob = require('./crons/tokens')
@@ -54,6 +56,8 @@ app.use(bodyParser.json())
 // app.use('/api/admin', adminRoutes)
 // app.use('/api/landingpages', ladingpageRoutes)
 app.use('/api/template', templateRoutes )
+app.use('/api/image', imagePropRoutes )
+app.use('/api/section', sectionRoutes)
 // Connect to MongoDB
 // const ip = 'localhost'
 // const portNumber = process.env.portNumber || 27017

@@ -4,16 +4,16 @@ const FormSchema = new mongoose.Schema({
   id: {
     type: mongoose.Schema.Types.ObjectId,
   },
-  SectionID: {
+  sectionID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Sections",
   },
-  TemplateID: {
+  templateID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Templates",
   },
-  FormProps: {
-    type: Array
+  formProps: {
+    type: Object
   }
   
 })
