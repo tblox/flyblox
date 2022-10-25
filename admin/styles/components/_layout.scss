@@ -105,7 +105,7 @@
             &--color {
               border-radius: 6px;
               width: 32px;
-                          }
+            }
           }
         }
       }
@@ -124,7 +124,7 @@
       position: relative;
       .element-view {
         transform-origin: top left;
-      };
+      }
       .content-default {
         display: flex;
         justify-content: center;
@@ -154,20 +154,27 @@
           padding: 10px;
           border-radius: 5px 10px;
           &:hover {
-            box-shadow: 0 0 4px 0 #ccc;;
+            box-shadow: 0 0 4px 0 #ccc;
           }
           span {
             margin-left: 10px;
             color: #666666;
             font-size: 20px;
           }
-          
         }
       }
 
       .content-selected {
-          position: relative;
-        }
+        position: relative;
+      }
+
+      .live-pages {
+        display: flex;
+        align-items: center;
+        padding: 0 22px;
+        min-height: 600px;
+        overflow: auto;
+      }
     }
   }
   @media screen and (min-width: 1200px) {

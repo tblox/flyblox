@@ -6,37 +6,37 @@
     Developed by: nouthemes
 */
 
-@import 'utilies/mixin';
-@import 'vendor/media_query';
-@import 'vendor/bourbon/bourbon';
+@import "utilies/mixin";
+@import "vendor/media_query";
+@import "vendor/bourbon/bourbon";
 
-@import 'utilies/settings';
+@import "utilies/settings";
 
-@import 'base/typhography';
-@import 'elements/grid';
-@import 'elements/button';
-@import 'elements/form';
-@import 'elements/pagination';
-@import 'elements/block';
+@import "base/typhography";
+@import "elements/grid";
+@import "elements/button";
+@import "elements/form";
+@import "elements/pagination";
+@import "elements/block";
 
-@import 'elements/panel';
-@import 'elements/filter';
-@import 'elements/table';
-@import 'elements/dropdown';
-@import 'elements/loader';
-@import 'elements/framestrip';
+@import "elements/panel";
+@import "elements/filter";
+@import "elements/table";
+@import "elements/dropdown";
+@import "elements/loader";
+@import "elements/framestrip";
 
+@import "components/forms";
+@import "components/section";
+@import "components/pages";
+@import "components/menu";
+@import "components/layout";
+@import "components/template";
+@import "components/livePage";
 
-@import 'components/forms';
-@import 'components/section';
-@import 'components/pages';
-@import 'components/menu';
-@import 'components/layout';
-@import 'components/template';
+@import "modules/header";
+@import "modules/footer";
 
-@import 'modules/header';
-@import 'modules/footer';
-
-@import 'elements/helpers';
-@import 'components/table';
-@import 'components/sidebar'
+@import "elements/helpers";
+@import "components/table";
+@import "components/sidebar";

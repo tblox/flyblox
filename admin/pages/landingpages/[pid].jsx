@@ -33,7 +33,6 @@ const sidebarItems = [
 ];
 
 function LandingPageLayout(props) {
-
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -43,7 +42,7 @@ function LandingPageLayout(props) {
   const [currentTab, setCurrentTab] = useState(sidebarItems[0]);
   //   const [urlImage, setUrlImage] = React.useState("");
 
-  console.log(router.query.pid)
+  console.log(router.query.pid);
   const { currentPage, currentSection } = useSelector(
     (store) => store.landingPage
   );

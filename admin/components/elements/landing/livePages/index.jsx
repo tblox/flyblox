@@ -3,7 +3,7 @@ import { RiSearch2Line } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { mappVariablesToTemplate } from "~/utilities/Template";
 
-function LandingTemplate({ onSelectTemplate }) {
+function LandingLivePages({ onSelectTemplate }) {
   const { templates } = useSelector((store) => store.landingPage);
 
   const scaledWrapper = useCallback(
@@ -67,4 +67,4 @@ function LandingTemplate({ onSelectTemplate }) {
   );
 }
 
-export default LandingTemplate;
+export default LandingLivePages;
