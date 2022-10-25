@@ -7,9 +7,9 @@
     display: none;
   }
 
-  // .ps-main__wrapper {
-  //     padding: 30px 16px;
-  // }
+  .ps-main__wrapper {
+    overflow: auto;
+  }
 
   @media screen and (min-width: 1200px) {
     display: flex;
@@ -29,7 +29,7 @@
 
     .ps-main__wrapper {
       margin-left: 200px;
-      flex: 1;
+      width: calc(100% - 200px);
     }
     
     .framestrip {

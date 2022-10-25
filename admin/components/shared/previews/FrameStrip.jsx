@@ -2,13 +2,16 @@ import React, { useCallback } from "react";
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { mappVariablesToTemplate } from "~/utilities/Template";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const FrameStrip = ({
   listFrame,
   currentFrame,
   setCurrentFrame,
   onAddNewFrame,
+  onReorderFrame
 }) => {
+
   const scaledWrapper = useCallback(
     (node) => {
       console.log(node);
@@ -19,6 +22,32 @@ const FrameStrip = ({
     },
     [listFrame]
   );
+
+  const getListStyle = isDraggingOver => ({
+    // background: isDraggingOver ? 'lightblue' : 'lightgrey',
+    display: 'flex',
+    overflow: 'auto',
+  });
+
+  const onDragEnd = (result) => {
+    console.log({ result });
+    if (!result.destination) return;
+    const frames = reorder(
+      listFrame,
+      result.source.index,
+      result.destination.index
+    );
+    onReorderFrame(frames);
+  };
+
+  const reorder = (list, startIndex, endIndex) => {
+    console.log({ list, startIndex, endIndex });
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+
+    return result;
+  };
 
   const applyScaling = (scaledWrapper) => {
     const listContent = scaledWrapper.getElementsByClassName("template");
@@ -46,36 +75,64 @@ const FrameStrip = ({
 
   return (
     <div className="framestrip" ref={scaledWrapper}>
-      {listFrame.map((item, index) => (
-        <div
-          key={index}
-          onClick={() => setCurrentFrame(item)}
-          className={`framestrip__item ${
-            currentFrame?._id === item._id ? "framestrip__item--selected" : ""
-          } `}
-        >
-          <div className="framestrip__frame">
-            {item.template && (
-              <div className="template">
-                <div
-                  className="template__content"
-                  id={item.template._id}
-                  dangerouslySetInnerHTML={{
-                    __html: mappVariablesToTemplate(item.template, item.values),
-                  }}
-                ></div>
-                <div className="overlay"></div>
-              </div>
-            )}
-            {item.imageUrl && item.imageUrl !== "" && (
-              <img src={item.imageUrl} />
-            )}
-          </div>
-          <div className="framestrip__order">
-            <span>{index + 1}</span>
-          </div>
-        </div>
-      ))}
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="droppable" direction="horizontal">
+          {(provided, snapshot) => (
+            <div
+              ref={provided.innerRef}
+              style={getListStyle(snapshot.isDraggingOver)}
+              {...provided.droppableProps}
+            >
+              {listFrame.map((item, index) => (
+                <Draggable key={item._id} draggableId={String(item._id)} index={index}>
+                  {(provided, snapshot) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                    >
+                      <div
+                        key={index}
+                        onClick={() => setCurrentFrame(item)}
+                        className={`framestrip__item ${
+                          currentFrame?._id === item._id
+                            ? "framestrip__item--selected"
+                            : ""
+                        } `}
+                      >
+                        <div className="framestrip__frame">
+                          {item.template && (
+                            <div className="template">
+                              <div
+                                className="template__content"
+                                id={item.template._id}
+                                dangerouslySetInnerHTML={{
+                                  __html: mappVariablesToTemplate(
+                                    item.template,
+                                    item.values
+                                  ),
+                                }}
+                              ></div>
+                              <div className="overlay"></div>
+                            </div>
+                          )}
+                          {item.imageUrl && item.imageUrl !== "" && (
+                            <img src={item.imageUrl} />
+                          )}
+                        </div>
+                        <div className="framestrip__order">
+                          <span>{index + 1}</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
       <Button
         icon={<PlusOutlined />}
         className="btn-add-frame"

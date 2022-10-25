@@ -1,13 +1,11 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import { RiSearch2Line } from "react-icons/ri";
-import { setCurrentSection } from "~/store/landingPages/action";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { mappVariablesToTemplate } from "~/utilities/Template";
 
-function LandingTemplate(props) {
-  const dispatch = useDispatch();
+function LandingTemplate({onSelectTemplate}) {
 
-  const { templates, currentSection } = useSelector(
+  const { templates } = useSelector(
     (store) => store.landingPage
   );
 
@@ -39,22 +37,7 @@ function LandingTemplate(props) {
         console.log(cw, ch, ww, wh);
         element.style.transform = `scale(${scaleAmtX}, ${scaleAmtY}) ${translateX}`;
       };
-
-     
     }
-  };
-
-  const onSelectTemplate = (template) => {
-    const section = JSON.parse(JSON.stringify(currentSection));
-    console.log("a", currentSection)
-    dispatch(
-      setCurrentSection({
-        ...section,
-        templateId: template._id,
-        template: template.template,
-        values: template.defaultValues,
-      })
-    );
   };
 
   return (

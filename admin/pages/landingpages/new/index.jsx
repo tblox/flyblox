@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import HeaderLanding from "~/components/shared/headers/HeaderLanding";
 import FrameStrip from "~/components/shared/previews/FrameStrip";
-import { RiSearch2Line } from "react-icons/ri";
-import { BiUpload } from "react-icons/bi";
-import { BsLayoutTextWindowReverse } from "react-icons/bs";
+import { BsLayoutTextWindowReverse, BsPlusSquareDotted } from "react-icons/bs";
 import ContainerDefault from "~/components/layouts/ContainerDefault";
 import HeaderDashboard from "~/components/shared/headers/HeaderDashboard";
 import { useDispatch } from "react-redux";
-import { getAllTemplate, setCurrentPage, setCurrentSection } from "~/store/landingPages/action";
+import {
+  getAllTemplate,
+  setCurrentPage,
+  setCurrentSection,
+} from "~/store/landingPages/action";
 import { useSelector } from "react-redux";
 import { HiTemplate } from "react-icons/hi";
 import { RiLayoutMasonryFill } from "react-icons/ri";
@@ -17,41 +19,55 @@ import LandingLayout from "~/components/elements/landing/layout";
 import LandingImage from "~/components/elements/landing/image";
 import LandingTemplate from "~/components/elements/landing/template";
 import { mappVariablesToTemplate } from "~/utilities/Template";
+import PreviewModal from "~/components/elements/landing/modal/previewModal";
+
 
 
 function NewLandingPage(props) {
 
-    const sidebarItems = [
-        {
-          id: 1,
-          title: "Layout",
-          icon: <RiLayoutMasonryFill />,
-          handle: <LandingLayout />
-        },
-        {
-          id: 2,
-          title: "Image",
-          icon: <FaPager />,
-          handle: <LandingImage />
-        },
-        {
-          id: 3,
-          title: "Template",
-          icon: <HiTemplate />,
-          handle: <LandingTemplate />
-        },
-      ];
-
-      
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const [currentTab, setCurrentTab] = useState(sidebarItems[0]);
-
-  console.log(router.query.pid)
   const { currentPage, currentSection } = useSelector(
     (store) => store.landingPage
   );
+  const [openPreviewPage, setOpenPreviewPage] = useState(false);
+
+  const onSelectTemplate = (template) => {
+    const section = JSON.parse(JSON.stringify(currentSection));
+    dispatch(
+      setCurrentSection({
+        ...section,
+        templateId: template._id,
+        template: template.template,
+        values: template.defaultValues,
+      })
+    );
+    setCurrentTab(sidebarItems[0])
+  };
+
+  const sidebarItems = [
+    {
+      id: 1,
+      title: "Layout",
+      icon: <RiLayoutMasonryFill />,
+      handle: <LandingLayout />,
+    },
+    {
+      id: 2,
+      title: "Image",
+      icon: <FaPager />,
+      handle: <LandingImage />,
+    },
+    {
+      id: 3,
+      title: "Template",
+      icon: <HiTemplate />,
+      handle: <LandingTemplate onSelectTemplate={onSelectTemplate} />,
+    },
+  ];
+
+  const [currentTab, setCurrentTab] = useState(sidebarItems[0]);
 
   useEffect(() => {
     dispatch(getAllTemplate());
@@ -62,7 +78,44 @@ function NewLandingPage(props) {
     dispatch(setCurrentSection(newSection));
   };
 
-  console.log(currentSection);
+  const onReorderPageSections = (newSections) => {
+    const temp = JSON.parse(JSON.stringify(currentPage));
+    temp.sections = newSections;
+    dispatch(setCurrentPage(temp));
+  };
+
+  const onPreviewPage = () => {
+    setOpenPreviewPage(true)
+  }
+
+  const scaledWrapper = useCallback(
+    (node) => {
+      if (node === null) {
+      } else {
+        applyScaling(node);
+      }
+    },
+    [currentSection]
+  );
+
+  const applyScaling = (scaledWrapper) => {
+    const element = scaledWrapper.getElementsByClassName("element-view")?.[0];
+    if (!element) return;
+      if (element.style.transform === "") {
+        let { width: cw, height: ch } = element?.getBoundingClientRect();
+        let { width: ww, height: wh } =
+        scaledWrapper.getBoundingClientRect();
+        let scaleAmtX = cw / ww;
+        let scaleAmtY = scaleAmtX;
+        const translateX =
+          cw * scaleAmtX > ww
+            ? `translateX(${-(cw * scaleAmtX - ww) / 2 / scaleAmtX}px)`
+            : "";
+        console.log(cw, ch, ww, wh,scaleAmtX);
+        element.style.transform = `scale(${scaleAmtX}, ${scaleAmtY}) ${translateX}`;
+      };
+  };
+
   return (
     <ContainerDefault>
       <HeaderDashboard
@@ -89,46 +142,75 @@ function NewLandingPage(props) {
           </ul>
           <div className="layout__left-content">
             <p>{currentTab.title}</p>
-                {currentTab.handle}
+            {currentTab.handle}
           </div>
         </div>
 
         <div className="layout__right">
-          <HeaderLanding />
-          <div className="layout__right-content">
-            {
-              !currentSection ? <div className="content-default">
-              <p>Add a new section to start</p>
-            </div>
-            :(!currentSection.template && !currentSection.imageUrl) ? (
+          <HeaderLanding onPreview={onPreviewPage}/>
+          <div className="layout__right-content" ref={scaledWrapper}>
+            {!currentSection ? (
               <div className="content-default">
-                <BsLayoutTextWindowReverse size={50}/>
+                <p>Add a new section to start</p>
+              </div>
+            ) : !currentSection.template && !currentSection.imageUrl ? (
+              <div className="content-default">
+                <BsLayoutTextWindowReverse size={50} />
                 <p>Add a template or image from left side to continue</p>
+                <div className="content-action">
+                  <div onClick={()=>setCurrentTab(sidebarItems[1])} className="content-action__item">
+                    <BsPlusSquareDotted size={25}/>
+                    <span>Add Image</span>
+                  </div>
+                  <div onClick={()=>setCurrentTab(sidebarItems[2])} className="content-action__item">
+                    <BsPlusSquareDotted size={25}/>
+                    <span>Add Template</span>
+                  </div>
+                </div>
               </div>
             ) : (
               <>
-              <div className="content-selected">
-                {
-                  currentSection.template ? <div dangerouslySetInnerHTML={{__html: mappVariablesToTemplate(currentSection.template, currentSection.values)}}></div>
-                  : <img
-                  src={currentSection.imageUrl ? URL.createObjectURL(currentSection.imageUrl) : ""}
-                  alt="image"
-                />
-                }
-              </div>
-              <div className="overlay"></div>
+                <div className="content-selected" >
+                  {currentSection.template ? (
+                    <div
+                      className="element-view"
+                      dangerouslySetInnerHTML={{
+                        __html: mappVariablesToTemplate(
+                          currentSection.template,
+                          currentSection.values
+                        ),
+                      }}
+                    ></div>
+                  ) : (
+                    <img
+                      className="element-view"
+                      src={
+                        currentSection.imageUrl
+                          ? URL.createObjectURL(currentSection.imageUrl)
+                          : ""
+                      }
+                      alt="image"
+                    />
+                  )}
+                <div className="overlay"></div>
+                </div>
               </>
-            )
-            }
+            )}
           </div>
           <FrameStrip
             listFrame={currentPage?.sections || []}
             currentFrame={currentSection}
             setCurrentFrame={(frame) => dispatch(setCurrentSection(frame))}
             onAddNewFrame={onAddNewSection}
+            onReorderFrame={onReorderPageSections}
           />
         </div>
       </div>
+      <PreviewModal 
+      isOpen={openPreviewPage}
+      handleClose={() => setOpenPreviewPage(false)}
+      page={currentPage}
+      />
     </ContainerDefault>
   );
 }

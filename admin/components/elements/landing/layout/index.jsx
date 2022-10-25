@@ -32,10 +32,10 @@ function LandingLayout(props) {
     {
       currentSection?.values ? 
       <div className="form__control">
-      {/* <div className="form__control__header">
+      <div className="form__control__header">
         <p>Button</p>
         <BsFillPlusSquareFill />
-      </div> */}
+      </div>
       <div className="form__control__item">
         <p>Button Text</p>
         <div className="form__control__item__input">
@@ -90,19 +90,19 @@ function LandingLayout(props) {
             type="color"
             id="button-color"
             name="button-color"
-            value={currentSection?.values.btnColor}
-            onChange={(e)=>onChangeTemplateValue("btnColor", e.target.value)}
+            value={currentSection?.values.bgColor}
+            onChange={(e)=>onChangeTemplateValue("bgColor", e.target.value)}
           ></input>
           <input
             type="text"
             placeholder="Color Hex"
             name="color-hex"
-            value={currentSection?.values.btnColor}
-            onChange={(e)=>onChangeTemplateValue("btnColor", e.target.value)}
+            value={currentSection?.values.bgColor}
+            onChange={(e)=>onChangeTemplateValue("bgColor", e.target.value)}
           ></input>
         </div>
       </div>
-      <div className="form__control__item">
+      {/* <div className="form__control__item">
         <p>Button Style</p>
         <select
           name="button-styles"
@@ -112,7 +112,7 @@ function LandingLayout(props) {
         >
           <option value="default">Default</option>
         </select>
-      </div>
+      </div> */}
       <div className="form__control__item">
         <p>Form Placement on image #</p>
         <select
