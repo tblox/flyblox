@@ -1,3 +1,4 @@
+import { sortBy } from "~/utilities/Array";
 import { actionTypes } from "./action";
 
 export const initState = {
@@ -76,11 +77,17 @@ function reducer(state = initState, actions) {
       };
     case actionTypes.GET_PAGE_DETAILS_SUCCESS:
       const sections = actions.payload?.sections
+      const temp = sortBy(sections.map(sec => {
+        return {
+          ...sec,
+          tempID: sec._id
+        }
+      }), 'order')
       return {
         ...state,
         loadingPageDetails: false,
-        currentPage: actions.payload,
-        currentSection: sections[sections.length - 1]
+        currentPage: {...actions.payload, sections: temp},
+        currentSection: temp[temp.length - 1]
       };
     case actionTypes.GET_PAGE_DETAILS_FAILED:
       return {

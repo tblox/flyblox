@@ -8,6 +8,23 @@ import { toggleDrawerMenu } from "~/store/app/action";
 import AddNewPageModal from "~/components/elements/landing/modal/addNewPageModal";
 import LandingPageRepository from "~/repositories/LandingPageRepository";
 import router from "next/router";
+import LandingLivePages from "~/components/elements/landing/livePages";
+import LivePage from "~/components/elements/landing/livePage";
+import { useSelector } from "react-redux";
+import PreviewModal from "~/components/elements/landing/modal/previewModal";
+
+
+const LIVE_PAGES = [
+  { title: "page 1" },
+  { title: "page 2" },
+  { title: "page 3" },
+  { title: "page 4" },
+  { title: "page 5" },
+  { title: "page 6" },
+  { title: "page 7" },
+  { title: "page 8" },
+  { title: "page 9" },
+];
 
 const LandingPage = () => {
 
@@ -16,7 +33,8 @@ const LandingPage = () => {
   const [title_contains, setTitle_contains] = useState("");
   const [openModalAddPage, setOpenModalAddPage] = useState(false);
   const [listPage, setListPage] = useState([]);
-
+  const [previewModal, setPreviewModal] = useState(null);
+  const {currentSection} = useSelector(store => store.landingPage)
   useEffect(() => {
     dispatch(toggleDrawerMenu(false));
     getListPage();
@@ -35,8 +53,17 @@ const LandingPage = () => {
   const onAddNewPage = ({name, slug}) => {
     LandingPageRepository.addLandingPage({pageName: name, pageSlug: slug}).then(res => {
         setOpenModalAddPage(false)
-        console.log("aaaa",res)
-        router.push(`/landingpages/${res.data.pageId}`)
+        onOpenEditPage(res.data.pageId)
+    })
+  }
+
+  const onOpenEditPage = (pid)=> {
+    router.push(`/landingpages/${pid}`)
+  }
+
+  const onPreviewPage = (pid)=> {
+    LandingPageRepository.getPageDetails({id: pid}).then(res => {
+      setPreviewModal(res.data)
     })
   }
 
@@ -58,7 +85,17 @@ const LandingPage = () => {
             </div>
           </div>
           <div className="ps-section__content">
-            <TableLandingPages title_contains={title_contains} />
+          <div className="live-pages">
+                {listPage.map((page) => (
+                  <LivePage
+                    key={page._id}
+                    onPreview={() =>onPreviewPage(page._id)}
+                    title={page.pageName}
+                    currentFrame={currentSection}
+                    onOpenEditPage={() =>onOpenEditPage(page._id)}
+                  />
+                ))}
+              </div>
           </div>
         </div>
       </section>
@@ -66,6 +103,11 @@ const LandingPage = () => {
       isOpen={openModalAddPage}
       handleClose={() => setOpenModalAddPage(false)}
       onAddNewPage={onAddNewPage}
+      />
+       <PreviewModal
+        isOpen={!!previewModal}
+        handleClose={() => setPreviewModal(null)}
+        page={previewModal}
       />
     </ContainerDefault>
   );

@@ -3,7 +3,7 @@ import { RiSearch2Line } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { mappVariablesToTemplate } from "~/utilities/Template";
 
-function LandingLivePages({ onSelectTemplate }) {
+function LandingLivePages({ }) {
   const { templates } = useSelector((store) => store.landingPage);
 
   const scaledWrapper = useCallback(
@@ -58,7 +58,6 @@ function LandingLivePages({ onSelectTemplate }) {
             ></div>
             <div
               className="overlay"
-              onClick={() => onSelectTemplate(template)}
             ></div>
           </div>
         ))}

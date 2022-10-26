@@ -51,7 +51,6 @@ class LandingPageRepository {
     }
 
     async savePage(payload) {
-        console.log("save page", payload)
         const endPoint = `/section/save-changes/${payload.pid}`
         const reponse = await Local.post(apiUrl + endPoint, payload.data)
             .then((response) => {
@@ -86,7 +85,7 @@ class LandingPageRepository {
             .then((response) => {
                 console.log(response, "response")
                 if (response.status === 200) {
-                    return { status: "Success", message: response.data.message }
+                    return { status: "Success", message: response.data.message, data: response.data }
                 } else if (response.status === 409){
                     return { status: "Failed", message: response.data.message }
                 }

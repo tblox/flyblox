@@ -36,7 +36,7 @@ function NewLandingPage(props) {
   const [openPreviewPage, setOpenPreviewPage] = useState(false);
 
   const onSelectTemplate = (template) => {
-    const section = JSON.parse(JSON.stringify(currentSection));
+    const section = currentSection? JSON.parse(JSON.stringify(currentSection)): {};
     dispatch(
       setCurrentSection({
         tempID: section? section.tempID : (new Date()).getTime(),
@@ -52,7 +52,7 @@ function NewLandingPage(props) {
   };
 
   const onSelectImage = (imageUrl) => {
-    const temp = JSON.parse(JSON.stringify(currentSection));
+    const temp = currentSection? JSON.parse(JSON.stringify(currentSection)): {};
     dispatch(
       setCurrentSection({ tempID: temp?temp.tempID: (new Date()).getTime(), typeSection: SECTION_TYPE.IMAGE,
         data: {imageUrl}
@@ -125,7 +125,6 @@ function NewLandingPage(props) {
         data,
       }
     })
-    console.log({data})
     dispatch(savePageChanges({pid, data: {changesValues: data}}))
   }
 

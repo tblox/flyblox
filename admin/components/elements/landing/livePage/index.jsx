@@ -3,7 +3,7 @@ import { GrFormView } from "react-icons/gr";
 import { mappVariablesToTemplate } from "~/utilities/Template";
 
 function LivePage(props) {
-  const { title, currentFrame, onPreview } = props;
+  const { title, currentFrame, onPreview, onOpenEditPage } = props;
 
   const scaledWrapper = useCallback(
     (node) => {
@@ -42,8 +42,8 @@ function LivePage(props) {
         <span className="preview--text">Preview</span>
       </div>
       <div className="live-page__title">{title}</div>
-      <div className="live-page__body">
-        <div className="live-page__body--wrapper">
+      <div className="live-page__body" onClick={onOpenEditPage}>
+        {/* <div className="live-page__body--wrapper">
           <div className="live-page__body--wrapper-image" ref={scaledWrapper}>
             {currentFrame?.template ? (
               <div
@@ -68,7 +68,7 @@ function LivePage(props) {
             )}
             <div className="overlay"></div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

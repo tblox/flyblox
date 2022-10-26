@@ -131,6 +131,8 @@
     width: 100%;
     align-items: center;
     justify-content: space-between;
+    padding-bottom: 20px;
+
   }
 
   .ps-section__footer {
@@ -150,7 +152,6 @@
     .ps-section__header {
       display: flex;
       width: 100%;
-      padding-bottom: 20px;
 
       &.simple {
         > * {
