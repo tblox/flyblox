@@ -1,12 +1,14 @@
 const Section = require("../models/SectionsModel");
 const ImageProps = require("../models/ImagePropsModel");
 const Form = require("../models/FormModel");
-const Template = require("../models/TemplatesModel");
-const cloudinary = require("../config/cloudinary.config");
 
 const SectionController = {
-  addNewSection: async (req, res) => {
+  saveChanges: async (req, res) => {
     try {
+      const pageId = req.params.pageId;
+
+      if (!pageId) return res.status(400).json({ msg: "Missing page ID" });
+
       const { changesValues } = req.body;
 
       // check logic order
@@ -28,34 +30,24 @@ const SectionController = {
       const [createdImageSec] = await Promise.all(
         createImageSections.map(async (creI) => {
           // logic check image ext
+          const abc = await Section.find({ order: creI.order, PageId: pageId });
+
+          if (abc.length) return res.json({ msg: "duplicate order" });
           const { order, typeSection, data } = creI;
 
-          // if (order === 0)
-          //   return res.status(400).json({ msg: "Order already exists !!!" });
-
-          const tmp = await Section.findOne({ order });
-
-          if (tmp)
-            return res.status(400).json({ msg: "Order already exists !!!" });
-
           return await Section.create(
-            { order: Number(order), typeSection },
+            { order: Number(order), typeSection, PageId: pageId },
             async (err, newImgSec) => {
               if (err) {
                 console.log({ err });
               }
-              console.log({ newImgSec });
 
               //   save image url record
               const { imageUrl } = data;
-              // check image is correct or not
 
-              console.log('aaaaaaaa', imageUrl);
-
-              //  end check image is correct or not
-              if(!imageUrl) {
-                return res.status(400).json({ msg: 'Image is required !'})
-              } 
+              if (!imageUrl) {
+                return res.status(400).json({ msg: "Image is required !" });
+              }
 
               const newImageUrl = await ImageProps.create(
                 { sectionID: newImgSec._id, imageUrl },
@@ -63,7 +55,6 @@ const SectionController = {
                   if (err) {
                     console.log({ err });
                   }
-                  console.log({ newImage });
 
                   return newImage;
                 }
@@ -73,12 +64,13 @@ const SectionController = {
                 newImgSec,
                 newImageUrl: newImageUrl,
               };
-            } 
+            }
           );
         }),
         updateImageSections.map(async (upI) => {
           // logic check image ext
           const { _id, order, data } = upI;
+
           return await Section.findByIdAndUpdate(
             _id,
             { order: Number(order) },
@@ -86,9 +78,6 @@ const SectionController = {
               if (err) {
                 console.log({ err });
               }
-              console.log({ updatedImgSec });
-              // updaye image url record if have
-              //  end check image url record if have
 
               const { imageUrl } = data;
               if (imageUrl) {
@@ -97,9 +86,8 @@ const SectionController = {
                   { imageUrl },
                   (err, newImage) => {
                     if (err) {
-                      console.log({ err });
+                      console.log(err);
                     }
-                    console.log({ newImage });
 
                     return newImage;
                   }
@@ -114,21 +102,18 @@ const SectionController = {
           );
         }),
         createFormSections.map(async (creF) => {
+          const abc = await Section.find({ order: creF.order, PageId: pageId });
+
+          if (abc.length) return res.json({ msg: "duplicate order" });
+
           const { order, typeSection, data } = creF;
 
-          const tmp = await Section.findOne({ order });
-
-          if (tmp)
-            return res.status(400).json({ msg: "Order already exists !!!" });
-
           return await Section.create(
-            { order: Number(order), typeSection },
+            { order: Number(order), typeSection, PageId: pageId },
             async (err, newFormSec) => {
               if (err) {
-                console.log({ err });
+                console.log(err);
               }
-
-              console.log({ newFormSec });
 
               const { templateID, formProps } = data;
 
@@ -153,23 +138,23 @@ const SectionController = {
         }),
         updateFormSections.map(async (upF) => {
           const { _id, order, data } = upF;
+
           return await Section.findByIdAndUpdate(
             _id,
-            { order: Number(order)},
+            { order: Number(order) },
             async (err, updateFormSec) => {
-              if(err) {
-                console.log({ err });
+              if (err) {
+                console.log(err);
               }
-              console.log({ updateFormSec });
 
-              const { templateID, formProps} = data;
-              if(templateID || formProps) {
+              const { templateID, formProps } = data;
+              if (templateID || formProps) {
                 const updateFormProps = await Form.findOneAndUpdate(
                   { sectionID: updateFormSec._id },
                   { templateID, formProps },
                   (err, newProps) => {
-                    if(err) {
-                      console.log({ err });
+                    if (err) {
+                      console.log(err);
                     }
                     console.log({ newProps });
 
@@ -180,29 +165,26 @@ const SectionController = {
                 return {
                   updateFormSec,
                   updateFormProps: updateFormProps,
-                }
+                };
               }
-
             }
-          )
+          );
         })
       );
 
-      // console.log({ createdImageSec });
+      const saveChangesValue = [...createImageSections, ...updateImageSections, ...createFormSections, ...updateFormSections];
 
-      // const [createdFormSec] = await Promise.all(
-      //   createFormSections.map(async (creF) => {
-      //     const { order, typeSection, data } = creF;
+    
 
-      //   })
-      // )
-
+      console.log({saveChangesValue});
       return res.send({
-        createImageSections,
-        updateImageSections,
-        createFormSections,
-        updateFormSections,
-        createdImageSec,
+        // createImageSections,
+        // updateImageSections,
+        // createFormSections,
+        // updateFormSections,
+        // createdImageSec,
+
+        saveChangesValue
       });
     } catch (error) {
       return res

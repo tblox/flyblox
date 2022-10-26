@@ -22,6 +22,7 @@ var Cron = require('cron').CronJob
 const templateRoutes = require('./routes/templateRouter')
 const imagePropRoutes = require('./routes/imagePropRouter')
 const sectionRoutes = require('./routes/sectionRouter')
+const pageRoutes = require('./routes/pageRouter')
 
 
 //Crons Jobs
@@ -58,6 +59,7 @@ app.use(bodyParser.json())
 app.use('/api/template', templateRoutes )
 app.use('/api/image', imagePropRoutes )
 app.use('/api/section', sectionRoutes)
+app.use('/api/page', pageRoutes)
 // Connect to MongoDB
 // const ip = 'localhost'
 // const portNumber = process.env.portNumber || 27017
@@ -81,6 +83,7 @@ mongoose.connect(URI, {
   useUnifiedTopology: true,
   useFindAndModify: false
 })
+
 mongoose.connection.on('connected', () => {
   console.log('Connected to Mongo instance...')
 })

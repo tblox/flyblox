@@ -49,16 +49,6 @@ const templateController = {
     }
   },
 
-  //   followTemplate: async (req, res) => {
-  //     try {
-  //         const user = await Template.find({_id: req.params.id, followers: req.body})
-  //         await Template.findOneAndUpdate({_id: req.id}, {
-  //             following:
-  //         })
-  //     } catch () {
-
-  //     }
-  //   }
 };
 
 module.exports = templateController;

@@ -12,10 +12,12 @@ const SectionSchema = new mongoose.Schema({
   },
   PageId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Pages'
+    ref: 'Pages',
+    required: true,
   },
-
   
 })
 
 module.exports = Sections = mongoose.model('Sections', SectionSchema)
+
+
