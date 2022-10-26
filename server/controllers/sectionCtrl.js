@@ -1,7 +1,7 @@
 const Section = require("../models/SectionsModel");
 const ImageProps = require("../models/ImagePropsModel");
 const Form = require("../models/FormModel");
-const Template = require("../models/TemplatesModel")
+const Template = require("../models/TemplatesModel");
 
 const SectionController = {
   saveChanges: async (req, res) => {
@@ -28,168 +28,129 @@ const SectionController = {
         (chaI) => chaI.typeSection == "Form" && chaI._id
       );
 
-      const [createdImageSec] = await Promise.all(
-        createImageSections.map(async (creI) => {
+      // let result = [];
+
+      const values = await Promise.all([
+        ...createImageSections.map(async (creI) => {
           // logic check image ext
           const abc = await Section.find({ order: creI.order, PageId: pageId });
 
           if (abc.length) return res.json({ msg: "duplicate order" });
           const { order, typeSection, data } = creI;
 
-          return await Section.create(
-            { order: Number(order), typeSection, PageId: pageId },
-            async (err, newImgSec) => {
-              if (err) {
-                console.log({ err });
-              }
+          return await Section.create({
+            order: Number(order),
+            typeSection,
+            PageId: pageId,
+          }).then(async (newImgSec) => {
+            const { imageUrl } = data;
 
-              //   save image url record
-              const { imageUrl } = data;
-
-              if (!imageUrl) {
-                return res.status(400).json({ msg: "Image is required !" });
-              }
-
-              const newImageUrl = await ImageProps.create(
-                { sectionID: newImgSec._id, imageUrl },
-                (err, newImage) => {
-                  if (err) {
-                    console.log({ err });
-                  }
-
-                  return newImage;
-                }
-              );
-
-              return {
-                newImgSec,
-                newImageUrl: newImageUrl,
-              };
+            if (!imageUrl) {
+              return res.status(400).json({ msg: "Image is required !" });
             }
-          );
+
+            const newImageUrl = await ImageProps.create({
+              sectionID: newImgSec._id,
+              imageUrl,
+            });
+
+            console.log({
+              ...newImgSec._doc,
+              data: { imageUrl: newImageUrl.imageUrl },
+            });
+
+            return {
+              ...newImgSec._doc,
+              data: { imageUrl: newImageUrl.imageUrl },
+            };
+          });
         }),
-        updateImageSections.map(async (upI) => {
+        ...updateImageSections.map(async (upI) => {
           // logic check image ext
           const { _id, order, data } = upI;
 
-          return await Section.findByIdAndUpdate(
-            _id,
-            { order: Number(order) },
-            async (err, updatedImgSec) => {
-              if (err) {
-                console.log({ err });
-              }
+          return Section.findByIdAndUpdate(_id, {
+            order: Number(order)
+          }, {new: true}).then(async (updatedImgSec) => {
+            const { imageUrl } = data;
 
-              const { imageUrl } = data;
-              if (imageUrl) {
-                const updateImageUrl = await ImageProps.findOneAndUpdate(
-                  { sectionID: updatedImgSec._id },
-                  { imageUrl },
-                  (err, newImage) => {
-                    if (err) {
-                      console.log(err);
-                    }
+            console.log({ updatedImgSec });
 
-                    return newImage;
-                  }
-                );
+            if (imageUrl) {
+              const updateImageUrl = await ImageProps.findOneAndUpdate(
+                { sectionID: updatedImgSec._id },
+                { imageUrl }, {new: true }, 
+              );
 
-                return {
-                  updatedImgSec,
-                  updatedImageUrl: updateImageUrl,
-                };
-              }
+              console.log('aaaaa', {...updatedImgSec._doc})
+
+              return {
+                ...updatedImgSec._doc,
+                data: { imageUrl: updateImageUrl.imageUrl },
+              };
             }
-          );
+          });
         }),
-        createFormSections.map(async (creF) => {
+
+        ...createFormSections.map(async (creF) => {
           const abc = await Section.find({ order: creF.order, PageId: pageId });
 
           if (abc.length) return res.json({ msg: "duplicate order" });
 
+          console.log({ creF });
+
           const { order, typeSection, data } = creF;
 
-          return await Section.create(
-            { order: Number(order), typeSection, PageId: pageId },
-            async (err, newFormSec) => {
-              if (err) {
-                console.log(err);
-              }
+          return await Section.create({
+            order: Number(order),
+            typeSection,
+            PageId: pageId,
+          }).then(async (newFormSec) => {
+            const { templateID, formProps } = data;
+            const currentTemplate = await Template.findOne({
+              _id: templateID,
+            });
 
-              const { templateID, formProps } = data;
+            const newProps = await Form.create({
+              sectionID: newFormSec._id,
+              templateID,
+              template: currentTemplate.template,
+              formProps,
+            });
 
-              const currentTemplate = await Template.findOne({ _id : templateID })
-
-              // console.log(currentTemplate.template);
-
-              const newProps = await Form.create(
-                { sectionID: newFormSec._id, templateID, template: currentTemplate.template, formProps },
-                (err, newForm) => {
-                  if (err) {
-                    console.log({ err });
-                  }
-
-                  console.log({ newForm });
-                  return newForm;
-                }
-              );
-
-              return {
-                newFormSec,
-                newProps: newProps,
-              };
-            }
-          );
+            return {
+              ...newFormSec._doc,
+              data: newProps,
+            };
+          });
         }),
-        updateFormSections.map(async (upF) => {
+        ...updateFormSections.map(async (upF) => {
           const { _id, order, data } = upF;
 
-          return await Section.findByIdAndUpdate(
-            _id,
-            { order: Number(order) },
-            async (err, updateFormSec) => {
-              if (err) {
-                console.log(err);
-              }
+          return await Section.findByIdAndUpdate(_id, {
+            order: Number(order),
+          }, {new: true }).then(async (updateFormSec) => {
+            const { templateID, formProps } = data;
 
-              const { templateID, formProps } = data;
-              if (templateID || formProps) {
-                const updateFormProps = await Form.findOneAndUpdate(
-                  { sectionID: updateFormSec._id },
-                  { templateID, formProps },
-                  (err, newProps) => {
-                    if (err) {
-                      console.log(err);
-                    }
-                    console.log({ newProps });
+            const updateFormProps = await Form.findOneAndUpdate(
+              { sectionID: updateFormSec._id },
+              { templateID, formProps }, {new: true }
+            );
 
-                    return newProps;
-                  }
-                );
+            return {
+              ...updateFormSec._doc,
+              data: updateFormProps,
+            };
+          });
+        }),
+      ]);
 
-                return {
-                  updateFormSec,
-                  updateFormProps: updateFormProps,
-                };
-              }
-            }
-          );
-        })
-      );
+      // console.log({ result1: result });
 
-      const saveChangesValue = [...createImageSections, ...updateImageSections, ...createFormSections, ...updateFormSections];
-
-    
-
-      console.log({saveChangesValue});
+      // console.log({ createdImageSec });
       return res.send({
-        // createImageSections,
-        // updateImageSections,
-        // createFormSections,
-        // updateFormSections,
-        // createdImageSec,
-
-        saveChangesValue
+        msg: 'Save changes successful',
+        values,
       });
     } catch (error) {
       return res
@@ -200,5 +161,3 @@ const SectionController = {
 };
 
 module.exports = SectionController;
-
-
