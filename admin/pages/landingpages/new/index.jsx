@@ -18,22 +18,22 @@ import { useRouter } from "next/router";
 import LandingLayout from "~/components/elements/landing/layout";
 import LandingImage from "~/components/elements/landing/image";
 import LandingTemplate from "~/components/elements/landing/template";
-import LandingLivePages from "~/components/elements/landing/livePages";
+// import LandingLivePages from "~/components/elements/landing/livePages";
 import { mappVariablesToTemplate } from "~/utilities/Template";
 import PreviewModal from "~/components/elements/landing/modal/previewModal";
-import LivePage from "~/components/elements/landing/livePage";
+// import LivePage from "~/components/elements/landing/livePage";
 
-const LIVE_PAGES = [
-  { title: "page 1" },
-  { title: "page 2" },
-  { title: "page 3" },
-  { title: "page 4" },
-  { title: "page 5" },
-  { title: "page 6" },
-  { title: "page 7" },
-  { title: "page 8" },
-  { title: "page 9" },
-];
+// const LIVE_PAGES = [
+//   { title: "page 1" },
+//   { title: "page 2" },
+//   { title: "page 3" },
+//   { title: "page 4" },
+//   { title: "page 5" },
+//   { title: "page 6" },
+//   { title: "page 7" },
+//   { title: "page 8" },
+//   { title: "page 9" },
+// ];
 
 function NewLandingPage(props) {
   const dispatch = useDispatch();
@@ -76,12 +76,13 @@ function NewLandingPage(props) {
       icon: <HiTemplate />,
       handle: <LandingTemplate onSelectTemplate={onSelectTemplate} />,
     },
-    {
-      id: 4,
-      title: "Live Pages",
-      icon: <HiTemplate />,
-      handle: <LandingLivePages onSelectTemplate={onSelectTemplate} />,
-    },
+    // ,
+    // {
+    //   id: 4,
+    //   title: "Live Pages",
+    //   icon: <HiTemplate />,
+    //   handle: <LandingLivePages onSelectTemplate={onSelectTemplate} />,
+    // },
   ];
 
   const [currentTab, setCurrentTab] = useState(sidebarItems[0]);
@@ -165,71 +166,58 @@ function NewLandingPage(props) {
         <div className="layout__right">
           <HeaderLanding onPreview={onPreviewPage} />
           <div className="layout__right-content" ref={scaledWrapper}>
-            {currentTab.id !== 4 ? (
-              !currentSection ? (
-                <div className="content-default">
-                  <p>Add a new section to start</p>
-                </div>
-              ) : !currentSection.template && !currentSection.imageUrl ? (
-                <div className="content-default">
-                  <BsLayoutTextWindowReverse size={50} />
-                  <p>Add a template or image from left side to continue</p>
-                  <div className="content-action">
-                    <div
-                      onClick={() => setCurrentTab(sidebarItems[1])}
-                      className="content-action__item"
-                    >
-                      <BsPlusSquareDotted size={25} />
-                      <span>Add Image</span>
-                    </div>
-                    <div
-                      onClick={() => setCurrentTab(sidebarItems[2])}
-                      className="content-action__item"
-                    >
-                      <BsPlusSquareDotted size={25} />
-                      <span>Add Template</span>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  <div className="content-selected">
-                    {currentSection.template ? (
-                      <div
-                        className="element-view"
-                        dangerouslySetInnerHTML={{
-                          __html: mappVariablesToTemplate(
-                            currentSection.template,
-                            currentSection.values
-                          ),
-                        }}
-                      ></div>
-                    ) : (
-                      <img
-                        className="element-view"
-                        src={
-                          currentSection.imageUrl
-                            ? URL.createObjectURL(currentSection.imageUrl)
-                            : ""
-                        }
-                        alt="image"
-                      />
-                    )}
-                    <div className="overlay"></div>
-                  </div>
-                </>
-              )
-            ) : (
-              <div className="live-pages">
-                {LIVE_PAGES.map((page) => (
-                  <LivePage
-                    key={page.title}
-                    onPreview={onPreviewPage}
-                    title={page.title}
-                    currentFrame={currentSection}
-                  />
-                ))}
+            {!currentSection ? (
+              <div className="content-default">
+                <p>Add a new section to start</p>
               </div>
+            ) : !currentSection.template && !currentSection.imageUrl ? (
+              <div className="content-default">
+                <BsLayoutTextWindowReverse size={50} />
+                <p>Add a template or image from left side to continue</p>
+                <div className="content-action">
+                  <div
+                    onClick={() => setCurrentTab(sidebarItems[1])}
+                    className="content-action__item"
+                  >
+                    <BsPlusSquareDotted size={25} />
+                    <span>Add Image</span>
+                  </div>
+                  <div
+                    onClick={() => setCurrentTab(sidebarItems[2])}
+                    className="content-action__item"
+                  >
+                    <BsPlusSquareDotted size={25} />
+                    <span>Add Template</span>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className="content-selected">
+                  {currentSection.template ? (
+                    <div
+                      className="element-view"
+                      dangerouslySetInnerHTML={{
+                        __html: mappVariablesToTemplate(
+                          currentSection.template,
+                          currentSection.values
+                        ),
+                      }}
+                    ></div>
+                  ) : (
+                    <img
+                      className="element-view"
+                      src={
+                        currentSection.imageUrl
+                          ? URL.createObjectURL(currentSection.imageUrl)
+                          : ""
+                      }
+                      alt="image"
+                    />
+                  )}
+                  <div className="overlay"></div>
+                </div>
+              </>
             )}
           </div>
           <FrameStrip
