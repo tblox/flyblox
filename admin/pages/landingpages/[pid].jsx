@@ -20,17 +20,17 @@ import { useRouter } from "next/router";
 import LandingLayout from "~/components/elements/landing/layout";
 import LandingImage from "~/components/elements/landing/image";
 import LandingTemplate from "~/components/elements/landing/template";
-import LandinLivePages from "~/components/elements/landing/livePages";
 import { mappVariablesToTemplate } from "~/utilities/Template";
 import PreviewModal from "~/components/elements/landing/modal/previewModal";
 import { SECTION_TYPE } from "~/constants";
+import { Spin } from "antd";
 
 function NewLandingPage(props) {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const pid = router.query?.pid;
-  const { currentPage, currentSection } = useSelector(
+  const { currentPage, currentSection, loadingSavePage } = useSelector(
     (store) => store.landingPage
   );
   const [openPreviewPage, setOpenPreviewPage] = useState(false);
@@ -184,7 +184,7 @@ function NewLandingPage(props) {
             {currentTab.handle}
           </div>
         </div>
-
+        <Spin  tip="Loading..." spinning={loadingSavePage}>
         <div className="layout__right">
           <HeaderLanding onPreview={onPreviewPage} onSaveChanges={onSavePageChanges}/>
           <div className="layout__right-content" ref={scaledWrapper}>
@@ -246,6 +246,8 @@ function NewLandingPage(props) {
             onReorderFrame={onReorderPageSections}
           />
         </div>
+        </Spin>
+
       </div>
       <PreviewModal
         isOpen={openPreviewPage}

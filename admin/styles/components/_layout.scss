@@ -120,6 +120,7 @@
     &-content {
       background: #E8E9ED;
       height: calc(100% - 196px);
+      min-height: calc(100vh - 250px);
       width: 100%;
       padding: 50px;
       position: relative;
@@ -215,7 +216,7 @@
   box-shadow: 0px 3px 50px rgba(176, 183, 204, 0.24);
   margin: 32px 24px 0 24px;
 
-  & > input[type="file"] {
+  input[type="file"] {
     font-size: 100px;
     position: absolute;
     left: 0;
