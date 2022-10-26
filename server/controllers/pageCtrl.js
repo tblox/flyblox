@@ -18,7 +18,9 @@ const PageCtl = {
 
       await newPage.save();
 
-      return res.status(200).json({ id: newPage._id, msg: `Add new Page successful !!!` });
+      return res
+        .status(200)
+        .json({ pageId: newPage._id, msg: `Add new Page successful !!!` });
     } catch (error) {
       return res.status(400).json({ msg: `Has some error ${error}` });
     }
@@ -40,10 +42,9 @@ const PageCtl = {
 
       if (!pageId) return res.status(400).json({ msg: "Missing page ID" });
 
-      const currentPage = await Pages.findOne({ _id: pageId});
-      
+      const currentPage = await Pages.findOne({ _id: pageId });
 
-      console.log(currentPage) 
+      console.log(currentPage);
 
       Sections.find({ PageId: pageId }, async (err, listSec) => {
         if (err) {
@@ -53,7 +54,7 @@ const PageCtl = {
         }
         // logic get props
 
-        console.log(listSec)
+        console.log(listSec);
 
         const allSecId = listSec.map((item) => item._id);
 
@@ -63,12 +64,14 @@ const PageCtl = {
         const listSectionWithData = listSec.map((item) => {
           return {
             ...item._doc,
-            data: (item._doc.typeSection == "Image"
-              ? allImgPropsNeed
-              : allFormPropsNeed
-            ).find((itemWithUrl) => {
-              return String(itemWithUrl.sectionID) == String(item._id);
-            }),
+            data:
+              item._doc.typeSection == "Image"
+                ? allImgPropsNeed.find((itemWithUrl) => {
+                    return String(itemWithUrl.sectionID) == String(item._id);
+                  })
+                : allFormPropsNeed.find((itemWithUrl) => {
+                    return String(itemWithUrl.sectionID) == String(item._id);
+                  }),
           };
         });
 
@@ -79,7 +82,6 @@ const PageCtl = {
           pageSlug: currentPage.pageSlug,
           listSection: listSectionWithData,
         });
-
       });
     } catch (error) {
       return res.json({ msg: error.msg });

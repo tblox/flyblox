@@ -1,6 +1,7 @@
 const Section = require("../models/SectionsModel");
 const ImageProps = require("../models/ImagePropsModel");
 const Form = require("../models/FormModel");
+const Template = require("../models/TemplatesModel")
 
 const SectionController = {
   saveChanges: async (req, res) => {
@@ -117,8 +118,12 @@ const SectionController = {
 
               const { templateID, formProps } = data;
 
+              const currentTemplate = await Template.findOne({ _id : templateID })
+
+              // console.log(currentTemplate.template);
+
               const newProps = await Form.create(
-                { sectionID: newFormSec._id, templateID, formProps },
+                { sectionID: newFormSec._id, templateID, templateHTML: currentTemplate.template, formProps },
                 (err, newForm) => {
                   if (err) {
                     console.log({ err });

@@ -12,6 +12,9 @@ const FormSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Templates",
   },
+  templateHTML: {
+    type: String,
+  },
   formProps: {
     type: Object
   }
