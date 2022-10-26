@@ -80,7 +80,7 @@ const PageCtl = {
           pageId: currentPage._id,
           pageName: currentPage.pageName,
           pageSlug: currentPage.pageSlug,
-          listSection: listSectionWithData,
+          sections: listSectionWithData,
         });
       });
     } catch (error) {

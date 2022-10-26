@@ -1,7 +1,6 @@
 import Repository, {
     Local,
-    basePostUrl,
-    serializeQuery,
+    apiUrl,
     baseUrl,
     baseTemplateUrl,
 } from "./Repository"
@@ -41,8 +40,49 @@ class LandingPageRepository {
         return reponse
     }
 
+    async getPageDetails(payload) {
+        const endPoint = `/page/${payload.id}`
+        const reponse = await Local.get( apiUrl + endPoint)
+            .then((response) => {
+                return response
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }))
+        return reponse
+    }
+
+    async savePage(payload) {
+        console.log("save page", payload)
+        const endPoint = `/section/save-changes/${payload.pid}`
+        const reponse = await Local.post(apiUrl + endPoint, payload.data)
+            .then((response) => {
+                return response
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }))
+        return reponse
+    }
+
     async addLandingPage(payload) {
-        const reponse = await Local.post(`${baseUrl}landingpages/add`, payload)
+        const reponse = await Local.post(`${apiUrl}/page/add-page`, payload)
+            .then((response) => {
+                console.log(response, "response")
+                if (response.status === 200) {
+                    return { status: "Success", message: response.data.message, data: response.data }
+                } else if (response.status === 409){
+                    return { status: "Failed", message: response.data.message }
+                }
+            })
+            .catch((error) => {
+                console.log(error, "dcsacascfsa")
+                if (error.response) {
+                    return { status: "Failed", message: error.response.data.error }
+                }
+                return { status: "Failed", message: "An error occurred" }
+            })
+        return reponse
+    }
+
+    async getListLandingPage() {
+        const reponse = await Local.get(`${apiUrl}/page/get-all-pages`)
             .then((response) => {
                 console.log(response, "response")
                 if (response.status === 200) {

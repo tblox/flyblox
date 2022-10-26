@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { BiUpload } from "react-icons/bi";
 import { BsFillPlusSquareFill } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,9 +12,8 @@ function LandingLayout({}) {
 
   const onChangeTemplateValue = (property, value) => {
     const section = JSON.parse(JSON.stringify(currentSection))
-    const values = section.values
-    values[property] = value
-    console.log(section.values)
+    const dataProps = section.data?.formProps
+    dataProps[property] = value
     dispatch(setCurrentSection(section))
   }
 
@@ -31,7 +30,7 @@ function LandingLayout({}) {
   return (
     <>
     {
-      currentSection?.values ? 
+      currentSection?.data?.formProps ? 
       <div className="form__control">
       <div className="form__control__header">
         <p>Button</p>
@@ -40,7 +39,7 @@ function LandingLayout({}) {
       <div className="form__control__item">
         <p>Button Text</p>
         <div className="form__control__item__input">
-          <input type="text" value={currentSection?.values.textBtn} onChange={(e)=>onChangeTemplateValue("textBtn", e.target.value)} placeholder="Button Text" name="search"></input>
+          <input type="text" value={currentSection?.data?.formProps.textBtn} onChange={(e)=>onChangeTemplateValue("textBtn", e.target.value)} placeholder="Button Text" name="search"></input>
         </div>
       </div>
       <div className="form__control__item">
@@ -51,14 +50,14 @@ function LandingLayout({}) {
             type="color"
             id="text-color"
             name="text-color"
-            value={currentSection?.values.textColor}
+            value={currentSection?.data?.formProps.textColor}
             onChange={(e)=>onChangeTemplateValue("textColor", e.target.value)}
           ></input>
           <input
             type="text"
             placeholder="Text Color"
             name="search"
-            value={currentSection?.values.textColor}
+            value={currentSection?.data?.formProps.textColor}
             onChange={(e)=>onChangeTemplateValue("textColor", e.target.value)}
           ></input>
         </div>
@@ -91,14 +90,14 @@ function LandingLayout({}) {
             type="color"
             id="button-color"
             name="button-color"
-            value={currentSection?.values.bgColor}
+            value={currentSection?.data?.formProps.bgColor}
             onChange={(e)=>onChangeTemplateValue("bgColor", e.target.value)}
           ></input>
           <input
             type="text"
             placeholder="Color Hex"
             name="color-hex"
-            value={currentSection?.values.bgColor}
+            value={currentSection?.data?.formProps.bgColor}
             onChange={(e)=>onChangeTemplateValue("bgColor", e.target.value)}
           ></input>
         </div>
@@ -119,7 +118,7 @@ function LandingLayout({}) {
         <select
           name="form-location"
           id="form-location"
-          value={currentSection?.values.location}
+          value={currentSection?.data?.formProps.location}
           onChange={e => onChangeTemplateValue("location", e.target.value)}
           className="form__control__item__input"
         >

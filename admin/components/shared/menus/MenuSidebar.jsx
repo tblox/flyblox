@@ -43,7 +43,7 @@ const MenuSidebar = () => {
     {
       text: 'Landing Pages',
       url: '/landingpages',
-      sub_url: ['/landingpages/new', '/landingpages/[pid]'],
+      sub_url: ['/landingpages/[pid]'],
       icon: 'icon-page-break',
     },
   ]

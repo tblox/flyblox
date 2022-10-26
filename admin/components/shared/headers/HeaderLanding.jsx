@@ -6,7 +6,7 @@ import { BsBroadcast } from "react-icons/bs";
 
 HeaderLanding.propTypes = {};
 
-function HeaderLanding({onPreview}) {
+function HeaderLanding({onPreview, onSaveChanges}) {
   const [isLive, setLive] = React.useState(false);
 
   const handleChangeLive = () => {
@@ -28,7 +28,7 @@ function HeaderLanding({onPreview}) {
       )}
 
       <div className=" header-landing__group">
-        <button className="button">Save Changes</button>
+        <button className="button" onClick={onSaveChanges}>Save Changes</button>
         <button className="button" onClick={onPreview}>
           <AiFillEye />
           Preview

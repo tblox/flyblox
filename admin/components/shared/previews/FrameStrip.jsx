@@ -3,6 +3,7 @@ import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { mappVariablesToTemplate } from "~/utilities/Template";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { SECTION_TYPE } from "~/constants";
 
 const FrameStrip = ({
   listFrame,
@@ -14,7 +15,6 @@ const FrameStrip = ({
 
   const scaledWrapper = useCallback(
     (node) => {
-      console.log(node);
       if (node === null) {
       } else {
         applyScaling(node);
@@ -24,13 +24,11 @@ const FrameStrip = ({
   );
 
   const getListStyle = isDraggingOver => ({
-    // background: isDraggingOver ? 'lightblue' : 'lightgrey',
     display: 'flex',
     overflow: 'auto',
   });
 
   const onDragEnd = (result) => {
-    console.log({ result });
     if (!result.destination) return;
     const frames = reorder(
       listFrame,
@@ -45,7 +43,6 @@ const FrameStrip = ({
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
-
     return result;
   };
 
@@ -84,7 +81,7 @@ const FrameStrip = ({
               {...provided.droppableProps}
             >
               {listFrame.map((item, index) => (
-                <Draggable key={item._id} draggableId={String(item._id)} index={index}>
+                <Draggable key={item.tempID} draggableId={String(item.tempID)} index={index}>
                   {(provided, snapshot) => (
                     <div
                       ref={provided.innerRef}
@@ -95,29 +92,29 @@ const FrameStrip = ({
                         key={index}
                         onClick={() => setCurrentFrame(item)}
                         className={`framestrip__item ${
-                          currentFrame?._id === item._id
+                          currentFrame?.tempID === item.tempID
                             ? "framestrip__item--selected"
                             : ""
                         } `}
                       >
                         <div className="framestrip__frame">
-                          {item.template && (
+                          {item.typeSection === SECTION_TYPE.FORM && (
                             <div className="template">
                               <div
                                 className="template__content"
-                                id={item.template._id}
+                                id={item.data?.templateID}
                                 dangerouslySetInnerHTML={{
                                   __html: mappVariablesToTemplate(
-                                    item.template,
-                                    item.values
+                                    item.data?.template,
+                                    item.data?.formProps
                                   ),
                                 }}
                               ></div>
                               <div className="overlay"></div>
                             </div>
                           )}
-                          {item.imageUrl && item.imageUrl !== "" && (
-                            <img src={item.imageUrl} />
+                          {item.typeSection === SECTION_TYPE.IMAGE && (
+                            <img src={item.data?.imageUrl} />
                           )}
                         </div>
                         <div className="framestrip__order">

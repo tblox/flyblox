@@ -123,7 +123,7 @@ const SectionController = {
               // console.log(currentTemplate.template);
 
               const newProps = await Form.create(
-                { sectionID: newFormSec._id, templateID, templateHTML: currentTemplate.template, formProps },
+                { sectionID: newFormSec._id, templateID, template: currentTemplate.template, formProps },
                 (err, newForm) => {
                   if (err) {
                     console.log({ err });

@@ -7,13 +7,14 @@ import HeaderDashboard from "~/components/shared/headers/HeaderDashboard";
 import { useDispatch } from "react-redux";
 import {
   getAllTemplate,
+  savePageChanges,
   setCurrentPage,
   setCurrentSection,
 } from "~/store/landingPages/action";
 import { useSelector } from "react-redux";
 import { HiTemplate } from "react-icons/hi";
 import { RiLayoutMasonryFill } from "react-icons/ri";
-import { FaPager } from "react-icons/fa";
+import { FaPager, FaPython } from "react-icons/fa";
 import { useRouter } from "next/router";
 import LandingLayout from "~/components/elements/landing/layout";
 import LandingImage from "~/components/elements/landing/image";
@@ -21,6 +22,7 @@ import LandingTemplate from "~/components/elements/landing/template";
 // import LandingLivePages from "~/components/elements/landing/livePages";
 import { mappVariablesToTemplate } from "~/utilities/Template";
 import PreviewModal from "~/components/elements/landing/modal/previewModal";
+import { SECTION_TYPE } from "~/constants";
 // import LivePage from "~/components/elements/landing/livePage";
 
 // const LIVE_PAGES = [
@@ -48,10 +50,13 @@ function NewLandingPage(props) {
     const section = JSON.parse(JSON.stringify(currentSection));
     dispatch(
       setCurrentSection({
-        ...section,
-        templateId: template._id,
-        template: template.template,
-        values: template.defaultValues,
+        tempID: section? section.tempID : (new Date()).getTime(),
+        data: {
+          templateID: template._id,
+          template: template.template,
+          formProps: template.defaultValues,
+        },
+        typeSection: SECTION_TYPE.FORM
       })
     );
     setCurrentTab(sidebarItems[0]);
@@ -60,7 +65,9 @@ function NewLandingPage(props) {
   const onSelectImage = (imageUrl) => {
     const temp = JSON.parse(JSON.stringify(currentSection));
     dispatch(
-      setCurrentSection({ _id: temp?temp._id: (new Date()).getTime(), imageUrl})
+      setCurrentSection({ tempID: temp?temp.tempID: (new Date()).getTime(), typeSection: SECTION_TYPE.IMAGE,
+        data: {imageUrl}
+      })
     );
     setCurrentTab(sidebarItems[0]);
   }
@@ -100,7 +107,7 @@ function NewLandingPage(props) {
   }, []);
 
   const onAddNewSection = () => {
-    const newSection = { _id: new Date().getTime() };
+    const newSection = { tempID: new Date().getTime() };
     dispatch(setCurrentSection(newSection));
   };
 
@@ -113,6 +120,26 @@ function NewLandingPage(props) {
   const onPreviewPage = () => {
     setOpenPreviewPage(true);
   };
+
+  const onSavePageChanges = () => {
+    const temp = JSON.parse(JSON.stringify(currentPage))?.sections?.filter(section => section.typeSection===SECTION_TYPE.FORM || section.typeSection === SECTION_TYPE.IMAGE);
+    const data = temp.map((section, index) => {
+      let data = {}
+      if (section.typeSection === SECTION_TYPE.IMAGE ) data = section.data
+      else if (section.typeSection === SECTION_TYPE.FORM ) data = {
+        templateID: section.data.templateID,
+        formProps: section.data.formProps
+      }
+      return {
+        _id: section._id || null,
+        order : index + 1,
+        typeSection: section.typeSection,
+        data,
+      }
+    })
+    console.log({data})
+    // dispatch(savePageChanges(data))
+  }
 
   const scaledWrapper = useCallback(
     (node) => {
@@ -172,13 +199,13 @@ function NewLandingPage(props) {
         </div>
 
         <div className="layout__right">
-          <HeaderLanding onPreview={onPreviewPage} />
+          <HeaderLanding onPreview={onPreviewPage} onSaveChanges={onSavePageChanges}/>
           <div className="layout__right-content" ref={scaledWrapper}>
             {!currentSection ? (
               <div className="content-default">
                 <p>Add a new section to start</p>
               </div>
-            ) : !currentSection.template && !currentSection.imageUrl ? (
+            ) : !currentSection.data ? (
               <div className="content-default">
                 <BsLayoutTextWindowReverse size={50} />
                 <p>Add a template or image from left side to continue</p>
@@ -202,19 +229,19 @@ function NewLandingPage(props) {
             ) : (
               <>
                 <div className="content-selected">
-                  {currentSection.template ? (
+                  {currentSection.typeSection === SECTION_TYPE.FORM ? (
                     <div
                       className="element-view"
                       dangerouslySetInnerHTML={{
                         __html: mappVariablesToTemplate(
-                          currentSection.template,
-                          currentSection.values
+                          currentSection.data?.template,
+                          currentSection.data?.formProps
                         ),
                       }}
                     ></div>
                   ) : (
                     <div className="element-view"> <img
-                    src={currentSection.imageUrl}
+                    src={currentSection.data?.imageUrl}
                     alt="image"
                   /></div>
                    

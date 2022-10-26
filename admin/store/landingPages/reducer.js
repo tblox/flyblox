@@ -3,12 +3,11 @@ import { actionTypes } from "./action";
 export const initState = {
   landingPage: [],
   templates: [],
-  currentPage: {
-    name: "abc",
-    sections: [],
-  },
+  currentPage: null,
   currentSection: null,
   loadingTemplates: false,
+  loadingSavePage: false,
+  loadingPageDetails: false,
 };
 
 function reducer(state = initState, actions) {
@@ -42,9 +41,11 @@ function reducer(state = initState, actions) {
     case actionTypes.SET_CURRENT_SECTION:
       const section = actions.payload;
       const page = JSON.parse(JSON.stringify(state.currentPage));
-      const existedSectionIndex = page.sections.findIndex((s) => s._id === section._id);
+      const existedSectionIndex = page.sections.findIndex(
+        (s) => s.tempID === section.tempID
+      );
       if (existedSectionIndex !== -1) {
-        page.sections[existedSectionIndex] = actions.payload
+        page.sections[existedSectionIndex] = actions.payload;
       } else {
         page.sections.push(section);
       }
@@ -52,6 +53,39 @@ function reducer(state = initState, actions) {
         ...state,
         currentPage: page,
         currentSection: actions.payload,
+      };
+    case actionTypes.SAVE_PAGE_CHANGES:
+      return {
+        ...state,
+        loadingSavePage: true,
+      };
+    case actionTypes.SAVE_PAGE_CHANGES_SUCCESS:
+      return {
+        ...state,
+        loadingSavePage: false,
+      };
+    case actionTypes.SAVE_PAGE_CHANGES_FAILED:
+      return {
+        ...state,
+        loadingSavePage: false,
+      };
+    case actionTypes.GET_PAGE_DETAILS:
+      return {
+        ...state,
+        loadingPageDetails: true,
+      };
+    case actionTypes.GET_PAGE_DETAILS_SUCCESS:
+      const sections = actions.payload?.sections
+      return {
+        ...state,
+        loadingPageDetails: false,
+        currentPage: actions.payload,
+        currentSection: sections[sections.length - 1]
+      };
+    case actionTypes.GET_PAGE_DETAILS_FAILED:
+      return {
+        ...state,
+        loadingPageDetails: false,
       };
     default:
       return state;

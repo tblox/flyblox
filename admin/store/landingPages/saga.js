@@ -1,6 +1,6 @@
 import { all, call, put, takeEvery, takeLatest } from "redux-saga/effects"
 import { notification } from "antd"
-import { actionTypes, getAllTemplateFailed, getAllTemplateSuccess, setLandingPage } from "./action"
+import { actionTypes, getAllTemplateFailed, getAllTemplateSuccess, getPageDetailsFailed, getPageDetailsSuccess, savePageChangesFailed, savePageChangesSuccess, setLandingPage } from "./action"
 import Router from "next/router"
 import LandingPageRepository from "~/repositories/LandingPageRepository"
 
@@ -108,9 +108,39 @@ function* getAllTemplate() {
     }
 }
 
+function* getPageDetails(payload) {
+    try {
+        const res = yield call(LandingPageRepository.getPageDetails, payload.payload)
+        if (res) {
+            yield put(getPageDetailsSuccess(res.data));
+        } else {
+            yield put(getPageDetailsFailed(res));
+            modalError("error", "Error Occured at Server Side")
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+function* savePageChanges(payload) {
+    try {
+        const res = yield call(LandingPageRepository.savePage(payload.payload))
+        if (res) {
+            yield put(savePageChangesSuccess(res.data));
+        } else {
+            yield put(savePageChangesFailed(res));
+            modalError("error", "Error Occured at Server Side")
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 export default function* rootSaga() {
     yield all([takeEvery(actionTypes.GET_LANDING_PAGE, getLandingPage)])
     yield all([takeEvery(actionTypes.GET_ALL_TEMPLATE, getAllTemplate)])
+    yield all([takeEvery(actionTypes.GET_PAGE_DETAILS, getPageDetails)])
+    yield all([takeEvery(actionTypes.SAVE_PAGE_CHANGES, savePageChanges)])
     yield all([takeEvery(actionTypes.ADD_LANDING_PAGE, addLandingPageSaga)])
     yield all([takeEvery(actionTypes.EDIT_LANDING_PAGE, editLandingPageSaga)])
     yield all([takeEvery(actionTypes.REMOVE_LANDING_PAGE, removeLandingPageSaga)])

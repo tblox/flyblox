@@ -8,6 +8,12 @@ export const actionTypes = {
     GET_ALL_TEMPLATE_FAILED: "GET_ALL_TEMPLATE_FAILED",
     SET_CURRENT_PAGE: "SET_CURRENT_PAGE",
     SET_CURRENT_SECTION: "SET_CURRENT_SECTION",
+    SAVE_PAGE_CHANGES: "SAVE_PAGE_CHANGES",
+    SAVE_PAGE_CHANGES_SUCCESS: "SAVE_PAGE_CHANGES_SUCCESS",
+    SAVE_PAGE_CHANGES_FAILED: "SAVE_PAGE_CHANGES_FAILED",
+    GET_PAGE_DETAILS: "GET_PAGE_DETAILS",
+    GET_PAGE_DETAILS_SUCCESS: "GET_PAGE_DETAILS_SUCCESS",
+    GET_PAGE_DETAILS_FAILED: "GET_PAGE_DETAILS_FAILED",
 }
 
 export function addLandingPage(payload) {
@@ -44,4 +50,26 @@ export function setCurrentPage(payload) {
 
 export function setCurrentSection(payload) {
     return { type: actionTypes.SET_CURRENT_SECTION, payload }
+}
+
+export function savePageChanges(payload) {
+    return { type: actionTypes.SAVE_PAGE_CHANGES, payload }
+}
+
+export function savePageChangesSuccess(payload) {
+    return { type: actionTypes.SAVE_PAGE_CHANGES_SUCCESS, payload }
+}
+
+export function savePageChangesFailed(payload) {
+    return { type: actionTypes.SAVE_PAGE_CHANGES_FAILED, payload }
+}
+
+export function getPageDetails(payload) {
+    return { type: actionTypes.GET_PAGE_DETAILS, payload }
+}
+export function getPageDetailsSuccess(payload) {
+    return { type: actionTypes.GET_PAGE_DETAILS_SUCCESS, payload }
+}
+export function getPageDetailsFailed(payload) {
+    return { type: actionTypes.GET_ALL_TEMPLATE_FAILED, payload }
 }

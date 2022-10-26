@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal } from "antd";
 import { mappVariablesToTemplate } from "~/utilities/Template";
+import { SECTION_TYPE } from "~/constants";
 
 function PreviewModal({ isOpen, handleClose, page }) {
 
@@ -15,18 +16,18 @@ function PreviewModal({ isOpen, handleClose, page }) {
     >
       <div className="preview-page">
         {page?.sections?.map((section) => {
-          return section.template ? (
+          return section.typeSection === SECTION_TYPE.FORM ? (
             <div
               dangerouslySetInnerHTML={{
                 __html: mappVariablesToTemplate(
-                  section.template,
-                  section.values
+                  section.data?.template,
+                  section.data?.formProps
                 ),
               }}
             ></div>
-          ) : section.imageUrl ? (
+          ) : section.typeSection === SECTION_TYPE.IMAGE ? (
             <img
-              src={section.imageUrl}
+              src={section.data?.imageUrl}
               alt="image"
             />
           ) : null;
