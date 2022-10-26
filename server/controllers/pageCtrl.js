@@ -30,9 +30,12 @@ const PageCtl = {
     try {
       const pages = await Pages.find();
 
+      console.log('aaaaaaaa')
+
+
       return res.json(pages);
-    } catch (error) {
-      return res.status(400).json({ msg: `Has some error ${error}` });
+    } catch (err) {
+      return res.json({ msg: err.message });
     }
   },
 
