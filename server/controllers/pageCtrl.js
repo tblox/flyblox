@@ -26,7 +26,7 @@ const PageCtl = {
 
   getAllPage: async (req, res) => {
     try {
-      const pages = await Page.find();
+      const pages = await Pages.find();
 
       return res.json(pages);
     } catch (error) {
@@ -40,6 +40,11 @@ const PageCtl = {
 
       if (!pageId) return res.status(400).json({ msg: "Missing page ID" });
 
+      const currentPage = await Pages.findOne({ _id: pageId});
+      
+
+      console.log(currentPage) 
+
       Sections.find({ PageId: pageId }, async (err, listSec) => {
         if (err) {
           return res
@@ -47,6 +52,8 @@ const PageCtl = {
             .json({ msg: `Get list sections fail ${err}`, error: err });
         }
         // logic get props
+
+        console.log(listSec)
 
         const allSecId = listSec.map((item) => item._id);
 
@@ -67,8 +74,12 @@ const PageCtl = {
 
         return res.json({
           msg: "Get list section success",
+          pageId: currentPage._id,
+          pageName: currentPage.pageName,
+          pageSlug: currentPage.pageSlug,
           listSection: listSectionWithData,
         });
+
       });
     } catch (error) {
       return res.json({ msg: error.msg });
