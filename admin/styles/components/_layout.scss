@@ -116,8 +116,9 @@
     margin-left: 400px;
     width: calc(100% - 400px);
     min-width: 1200px;
+    height: 100%;
     &-content {
-      background: #ccc;
+      background: #E8E9ED;
       height: calc(100% - 196px);
       width: 100%;
       padding: 50px;
@@ -179,6 +180,7 @@
   }
   @media screen and (min-width: 1200px) {
     margin-top: 52px;
+    height: calc(100% - 52px);
   }
 }
 

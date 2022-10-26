@@ -57,6 +57,14 @@ function NewLandingPage(props) {
     setCurrentTab(sidebarItems[0]);
   };
 
+  const onSelectImage = (imageUrl) => {
+    const temp = JSON.parse(JSON.stringify(currentSection));
+    dispatch(
+      setCurrentSection({ _id: temp?temp._id: (new Date()).getTime(), imageUrl})
+    );
+    setCurrentTab(sidebarItems[0]);
+  }
+
   const sidebarItems = [
     {
       id: 1,
@@ -68,7 +76,7 @@ function NewLandingPage(props) {
       id: 2,
       title: "Image",
       icon: <FaPager />,
-      handle: <LandingImage />,
+      handle: <LandingImage  onSelectImage={onSelectImage} />,
     },
     {
       id: 3,
@@ -117,7 +125,7 @@ function NewLandingPage(props) {
   );
 
   const applyScaling = (scaledWrapper) => {
-    const element = scaledWrapper.getElementsByClassName("element-view")?.[0];
+    const element = scaledWrapper.getElementsByClassName("content-selected")?.[0];
     if (!element) return;
     if (element.style.transform === "") {
       let { width: cw, height: ch } = element?.getBoundingClientRect();
@@ -205,15 +213,11 @@ function NewLandingPage(props) {
                       }}
                     ></div>
                   ) : (
-                    <img
-                      className="element-view"
-                      src={
-                        currentSection.imageUrl
-                          ? URL.createObjectURL(currentSection.imageUrl)
-                          : ""
-                      }
-                      alt="image"
-                    />
+                    <div className="element-view"> <img
+                    src={currentSection.imageUrl}
+                    alt="image"
+                  /></div>
+                   
                   )}
                   <div className="overlay"></div>
                 </div>

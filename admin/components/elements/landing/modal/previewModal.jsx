@@ -3,7 +3,7 @@ import { Modal } from "antd";
 import { mappVariablesToTemplate } from "~/utilities/Template";
 
 function PreviewModal({ isOpen, handleClose, page }) {
-  console.log({ page });
+
   return (
     <Modal
       title="Preview Page"
@@ -26,9 +26,7 @@ function PreviewModal({ isOpen, handleClose, page }) {
             ></div>
           ) : section.imageUrl ? (
             <img
-              src={
-                section.imageUrl ? URL.createObjectURL(section.imageUrl) : ""
-              }
+              src={section.imageUrl}
               alt="image"
             />
           ) : null;

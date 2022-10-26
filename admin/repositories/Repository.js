@@ -1,7 +1,7 @@
 import axios from "axios";
 import getToken from "~/utilities/GetToken"
 export const isGrapql = true;
-const apiUrl = process.env.NEXT_PUBLIC_API_URL
+export const apiUrl = process.env.NEXT_PUBLIC_API_URL
 const baseDomain = `${apiUrl}/admin/`;
 /*const baseDomain = 'http://45.76.97.89:1337';*/
 const authorization_prefix = "Bearer ";

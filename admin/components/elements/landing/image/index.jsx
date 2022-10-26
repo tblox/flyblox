@@ -1,15 +1,16 @@
 import React from "react";
 import { BiUpload } from "react-icons/bi";
+import UploadImage from "~/repositories/UploadImage";
 
-function LandingImage(props) {
-  const [selectedFile, setSelectedFile] = React.useState(null);
+function LandingImage({onSelectImage}) {
 
-  const changeHandler = (event) => {
-    if (event.target.files[0]) setSelectedFile(event.target.files[0]);
-
-    if (selectedFile !== null) {
-      setUrlImage(URL.createObjectURL(selectedFile));
-      console.log(urlImage);
+  const onUploadImage = (event) => {
+    event.preventDefault();
+    const file = event.target.files?.[0]
+    if(file) {
+      UploadImage.uploadImage({image: file}).then(res => {
+        onSelectImage(res.data.imageUrl)
+      })
     }
   };
 
@@ -20,7 +21,7 @@ function LandingImage(props) {
         <p className="button__upload-title">Upload file</p>
         <p className="button__upload-description">PNG, JPEG, WEBP, SVG</p>
       </button>
-      <input type="file" name="file" onChange={changeHandler} />
+      <input type="file" name="file" onChange={onUploadImage} />
     </div>
   );
 }

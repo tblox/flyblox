@@ -2,22 +2,13 @@ import React, { useState } from "react";
 import { BiUpload } from "react-icons/bi";
 import { BsFillPlusSquareFill } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
+import UploadImage from "~/repositories/UploadImage";
 import { setCurrentSection } from "~/store/landingPages/action";
 
-function LandingLayout(props) {
+function LandingLayout({}) {
 
   const dispatch = useDispatch();
-  const [selectedFile, setSelectedFile] = React.useState(null);
-
   const { currentSection } = useSelector((store) => store.landingPage);
-  const changeHandler = (event) => {
-    if (event.target.files[0]) setSelectedFile(event.target.files[0]);
-
-    if (selectedFile !== null) {
-      setUrlImage(URL.createObjectURL(selectedFile));
-      console.log(urlImage);
-    }
-  };
 
   const onChangeTemplateValue = (property, value) => {
     const section = JSON.parse(JSON.stringify(currentSection))
@@ -25,8 +16,18 @@ function LandingLayout(props) {
     values[property] = value
     console.log(section.values)
     dispatch(setCurrentSection(section))
-
   }
+
+  const onUploadImage = (event) => {
+    event.preventDefault();
+    const file = event.target.files?.[0]
+    if(file) {
+      UploadImage.uploadImage({image: file}).then(res => {
+        onChangeTemplateValue("urlImage", res.data.imageUrl)
+    })
+    }
+  };
+
   return (
     <>
     {
@@ -135,7 +136,7 @@ function LandingLayout(props) {
             <p className="button__upload-title">Upload file</p>
             <p className="button__upload-description">PNG, JPEG, WEBP, SVG</p>
           </button>
-          <input type="file" name="file" onChange={changeHandler} />
+          <input type="file" name="file" onChange={onUploadImage} />
         </div>
       </div>
     </div> : <></>
