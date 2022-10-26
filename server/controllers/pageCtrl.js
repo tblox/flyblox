@@ -18,7 +18,7 @@ const PageCtl = {
 
       await newPage.save();
 
-      return res.status(200).json({ msg: `Add new Page successful !!!` });
+      return res.status(200).json({ id: newPage._id, msg: `Add new Page successful !!!` });
     } catch (error) {
       return res.status(400).json({ msg: `Has some error ${error}` });
     }
