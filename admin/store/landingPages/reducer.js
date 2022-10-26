@@ -61,9 +61,19 @@ function reducer(state = initState, actions) {
         loadingSavePage: true,
       };
     case actionTypes.SAVE_PAGE_CHANGES_SUCCESS:
+      const newSections = sortBy(actions.payload.map(sec => {
+        return {
+          ...sec,
+          tempID: sec._id
+        }
+      }), 'order')
+      const  oldPage= JSON.parse(JSON.stringify(state.currentPage));
+      oldPage.sections = newSections
       return {
         ...state,
         loadingSavePage: false,
+        currentPage: oldPage,
+        currentSection: newSections[newSections.length - 1]
       };
     case actionTypes.SAVE_PAGE_CHANGES_FAILED:
       return {

@@ -124,9 +124,9 @@ function* getPageDetails(payload) {
 
 function* savePageChanges(payload) {
     try {
-        const res = yield call(LandingPageRepository.savePage(payload.payload))
+        const res = yield call(LandingPageRepository.savePage,payload.payload)
         if (res) {
-            yield put(savePageChangesSuccess(res.data));
+            yield put(savePageChangesSuccess(res.data.values));
         } else {
             yield put(savePageChangesFailed(res));
             modalError("error", "Error Occured at Server Side")

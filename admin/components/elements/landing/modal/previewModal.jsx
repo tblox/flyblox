@@ -18,6 +18,7 @@ function PreviewModal({ isOpen, handleClose, page }) {
         {page?.sections?.map((section) => {
           return section.typeSection === SECTION_TYPE.FORM ? (
             <div
+              key={section.tempID}
               dangerouslySetInnerHTML={{
                 __html: mappVariablesToTemplate(
                   section.data?.template,
@@ -27,6 +28,7 @@ function PreviewModal({ isOpen, handleClose, page }) {
             ></div>
           ) : section.typeSection === SECTION_TYPE.IMAGE ? (
             <img
+              key={section.tempID}
               src={section.data?.imageUrl}
               alt="image"
             />
