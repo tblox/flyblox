@@ -113,7 +113,7 @@ const ModuleProductActions = ({ product, ecomerce, auth }) => {
           href="#"
           data-toggle="tooltip"
           data-placement="top"
-          title="Add To Cart"
+          title="Add To Cart 👉"
           onClick={handleAddItemToCart}
         >
           <i className="icon-bag2"></i>

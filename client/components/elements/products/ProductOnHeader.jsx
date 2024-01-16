@@ -116,7 +116,7 @@ const ProductOnHeader = ({ ecomerce, product, auth }) => {
             href='#'
             onClick={e => handleAddItemToCart(e)}
           >
-            Add to Cart
+            Add to Cart 👉
           </a>
         </div>
       </div>

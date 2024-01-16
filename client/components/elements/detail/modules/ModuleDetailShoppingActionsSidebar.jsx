@@ -89,10 +89,10 @@ const ModuleDetailShoppingActionsSidebar = ({ ecomerce, product, auth }) => {
         href='#'
         onClick={e => handleAddItemToCart(e)}
       >
-        Add to cart
+        Add to Cart 👉
       </a>
       <a className='ps-btn' href='#' onClick={e => handleAddItemToCart(e)}>
-        Buy Now
+        Buy Now 👉
       </a>
       <div className='ps-product__actions'>
         <a href='#' onClick={e => handleAddItemToWishlist(e)}>

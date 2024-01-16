@@ -143,10 +143,10 @@ const ModuleDetailActionsMobile = ({
         href='#'
         onClick={e => handleAddItemToCart(e)}
       >
-        Add to cart
+        Add to Cart 👉
       </a>
       <a className='ps-btn' href='#' onClick={e => handleBuynow(e)}>
-        Buy Now
+        Buy Now 👉
       </a>
     </div>
   )

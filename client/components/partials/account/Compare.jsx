@@ -149,7 +149,7 @@ const Compare = ({ ecomerce }) => {
                             className='ps-btn'
                             onClick={e => handleAddItemToCart(e, product)}
                           >
-                            Add To Cart
+                            Add To Cart 👉
                           </button>
                         </td>
                       ))

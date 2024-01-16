@@ -94,7 +94,7 @@ const ModuleProductWideActions = ({ ecomerce, product, auth }) => {
                 className="ps-btn"
                 href="#"
                 onClick={(e) => handleAddItemToCart(e)}>
-                Add to cart
+                Add to Cart 👉
             </a>
             {/* <ul className="ps-product__actions">
                 <li>

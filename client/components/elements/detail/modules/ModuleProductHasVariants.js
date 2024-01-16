@@ -270,13 +270,13 @@ const ModuleProductHasVariants = ({ ecomerce, currency, product }) => {
                         className="ps-btn ps-btn--black"
                         href="#"
                         onClick={(e) => handleAddItemToCart(e)}>
-                        Add to cart
+                        Add to Cart 👉
                     </a>
                     <a
                         className="ps-btn"
                         href="#"
                         onClick={(e) => handleAddItemToCart(e)}>
-                        Buy Now
+                        Buy Now 👉
                     </a>
                     <div className="ps-product__actions">
                         <a href="#" onClick={(e) => handleAddItemToWishlist(e)}>
@@ -294,13 +294,13 @@ const ModuleProductHasVariants = ({ ecomerce, currency, product }) => {
                         className="ps-btn ps-btn--black"
                         href="#"
                         onClick={(e) => handleAddItemToCart(e)}>
-                        Add to cart
+                        Add to Cart 👉
                     </a>
                     <a
                         className="ps-btn"
                         href="#"
                         onClick={(e) => handleBuynow(e)}>
-                        Buy Now
+                        Buy Now 👉
                     </a>
                 </div>
             </div>

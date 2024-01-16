@@ -178,10 +178,10 @@ class ProductDetailImageSwatches extends Component {
                 </div>
               </figure>
               <a className='ps-btn ps-btn--black' href='#'>
-                Add to cart
+                Add to Cart 👉
               </a>
               <a className='ps-btn' href='#'>
-                Buy Now
+                Buy Now 👉
               </a>
               <div className='ps-product__actions'>
                 <a href='#'>

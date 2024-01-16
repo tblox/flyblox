@@ -62,7 +62,7 @@ const Wishlist = ({ ecomerce }) => {
                                         onClick={(e) =>
                                             handleAddItemToCart(e, product)
                                         }>
-                                        Add to cart
+                                        Add to Cart 👉
                                     </a>
                                 </td>
                             </tr>

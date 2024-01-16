@@ -240,7 +240,7 @@ const ModuleDetailShoppingActions = ({
             style={{ opacity: productQuantity > 0 ? '' : '0.75' }}
             disabled={productQuantity > 0 ? null : 'disabled'}
           >
-            Add to cart
+            Add to Cart 👉
           </a>
           <a
             // className='ps-btn'
@@ -251,7 +251,7 @@ const ModuleDetailShoppingActions = ({
             style={{ opacity: productQuantity > 0 ? '' : '0.75' }}
             disabled={productQuantity > 0 ? null : 'disabled'}
           >
-            Buy Now
+            Buy Now 👉
           </a>
           {/* <div className='ps-product__actions'>
           <a href='#' onClick={e => handleAddItemToWishlist(e)}>
@@ -296,7 +296,7 @@ const ModuleDetailShoppingActions = ({
             href='#'
             onClick={e => handleAddItemToCart(e)}
           >
-            Add to cart
+            Add to Cart 👉
           </a>
           {/* <div className='ps-product__actions'>
             <a href='#' onClick={e => handleAddItemToWishlist(e)}>
@@ -308,7 +308,7 @@ const ModuleDetailShoppingActions = ({
           </div> */}
         </div>
         <a className='ps-btn' href='#' onClick={e => handleBuynow(e)}>
-          Buy Now
+          Buy Now 👉
         </a>
       </div>
     )
