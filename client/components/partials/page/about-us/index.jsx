@@ -1,48 +1,61 @@
-import React from 'react'
+import React from "react";
 
 const AboutUs = () => (
-  <div className='ps-contact-form'>
-    <div className='container'>
+  <div className="ps-contact-form">
+    <div className="container">
       <h3>About Flyblox</h3>
-      <div className='ps-block__content'>
+      <div className="ps-block__content">
         <h4>Who We Are</h4>
         <p>
-          We are a passionate team of digital currency experts driven
-          to make it easier to buy products peer-to-peer. The 21st
-          century demands a better way to trade, do business, and make
-          purchases. Our digital currency and bitcoin market place
-          makes it easier to do just that. Based in Australia, but
-          obsessive about an international digital currency, we
-          proudly provide service worldwide.
+          As a dedicated team of digital currency experts, we are committed to
+          simplifying peer-to-peer product transactions. In response to the
+          demands of the 21st century, we strive to redefine trade, business,
+          and purchasing experiences through our international digital currency
+          platform, catering to a global clientele. .
         </p>
       </div>
-      <div className='ps-block__content'>
-        <h4>What We Do?</h4>
+      <div className="ps-block__content">
+        <h4>What We Offer</h4>
         <p>
-          Our digital currency marketplace is similar to big
-          e-commerce shopping stores, but we offer the lowest fees of
-          any online marketplace—just 1%! Our iron-clad built-in
-          escrow service also offers superior buyer protection and
-          money back feature. We truly care about both our buyers and
-          sellers and support each other equally.
+          Our digital currency marketplace, akin to major e-commerce platforms,
+          stands out with an unparalleled advantage—minimal fees at just 1.95%!
+          Enhanced by a robust built-in escrow service, we prioritize superior
+          buyer protection and a reliable money-back feature. We prioritize both
+          buyers and sellers, fostering a supportive community.
         </p>
       </div>
-      <div className='ps-block__content'>
-        <h4>Why Choose Flyblox?</h4>
-        <p>
-          We the lowest fees you’ll find online. Lower than E-Bay,
-          Shopify, Amazon, PayPal, Visa, and MasterCard <br /> So you
-          make more.
-          <br /> At the core of what we do, our goal is to offer users
-          around the world an easy to use online marketplace where no
-          individual is excluded. Enjoy low fees, friendly customer
-          support, We have an escrow service to ensure currency
-          doesn’t change hands until the goods are delivered, and a
-          guarantee when you choose Flyblox.
-        </p>
+      <div className="ps-block__content">
+        <h4>Customer Benefits with Flyblox</h4>
+        <ul>
+          <li>
+            <span className="benefit-title">Lowest Fees:</span> Enjoy fees lower
+            than major platforms like E-Bay, Shopify, Amazon, PayPal, Visa, and
+            MasterCard, ensuring you keep more of your earnings.
+          </li>
+          <li>
+            <span className="benefit-title">Inclusive Marketplace:</span> Our
+            goal is to provide users worldwide with an inclusive, user-friendly
+            online marketplace where no one is left out.
+          </li>
+          <li>
+            <span className="benefit-title">Friendly Customer Support:</span>{" "}
+            Experience exceptional customer support that genuinely cares about
+            your concerns and inquiries.
+          </li>
+          <li>
+            <span className="benefit-title">Escrow Service:</span> Our built-in
+            escrow service guarantees that currency changes hands only upon
+            successful delivery of goods, ensuring a secure transaction process.
+          </li>
+          <li>
+            <span className="benefit-title">Delivery Guarantee:</span> With
+            Flyblox, choose confidence in every transaction as we stand by a
+            guarantee that assures the delivery of goods.
+          </li>
+        </ul>
       </div>
     </div>
   </div>
-)
+);
 
-export default AboutUs
+export default AboutUs;
