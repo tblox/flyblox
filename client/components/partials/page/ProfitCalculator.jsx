@@ -82,7 +82,7 @@ const ProfitCalculator = () => {
       <div className='container'>
         <Form className='ps-form--profit' form={form}>
           <div className='ps-section__header'>
-            <h3>Flyblox PROFIT CALCULATOR</h3>
+            <h3>Flyblox Profit Calculator</h3>
           </div>
           <div className='form-group'>
             <label>Sold Price*</label>

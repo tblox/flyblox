@@ -24,7 +24,7 @@ const HomepageDefaultPage = () => {
     gtag('config', 'G-GJ3Y3E1SQX');
   })
   return (
-    <PageContainer title='Multipurpose Marketplace React Ecommerce Template'>
+    <PageContainer title='Flyblox Global Cryptocurrency Market Place'>
       <main id='homepage-1'>
         <Shop />
         <SiteFeatures />

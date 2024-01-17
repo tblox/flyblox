@@ -32,7 +32,7 @@ const MetaMask = ({mobile}) => {
         document.getElementById('wallet_btn').innerText ='Metamask is not installed'
     } else {
       let text = mobile?document.getElementById('wallet_div').innerText:document.getElementById('wallet_btn').innerText
-      if (text == 'Connect') {
+      if (text == 'Connect Wallet 👉') {
         getAccount()
       } else if (text == 'Disconnect') {
         if (!window.ethereum?.selectedAddress) {
@@ -46,8 +46,8 @@ const MetaMask = ({mobile}) => {
   useEffect(() => {
     if (!window.ethereum?.selectedAddress) {
       mobile?
-        document.getElementById('wallet_div').innerText = 'Connect':
-        document.getElementById('wallet_btn').innerText = 'Connect'
+        document.getElementById('wallet_div').innerText = 'Connect Wallet 👉':
+        document.getElementById('wallet_btn').innerText = 'Connect Wallet 👉'
         if(!mobile) document.getElementById('wallet_btn').style['border'] =
           '2px solid #ffffff'
     } else {

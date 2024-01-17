@@ -1,18 +1,28 @@
-import React from 'react'
-import Link from 'next/link'
+import React from "react";
+import Link from "next/link";
 
 const ModuleProductDetailSpecification = ({ product }) => (
-    <div className="ps-product__specification">
-        {/* <Link href="/page/contact-us">
+  <div className="ps-product__specification">
+    {/* <Link href="/page/contact-us">
             <a className="report">Report Abuse</a>
         </Link> */}
-        {product?.sku ?
-            <p>
-                <strong>SKU:</strong> {product.sku}
-            </p>
-            : null
-        }
-        {product?.category ?
+    {product?.sku ? (
+      <p>
+        <strong>SKU:</strong> {product.sku}
+      </p>
+    ) : null}
+    <div className="trust-badge">
+      <img
+        src="/static/img/products/money-back-guarantee-badge.png"
+        alt="money-back"
+      />
+      <img
+        src="/static/img/products/guaranteed-safe-checkout.png"
+        alt="safe-checkout"
+      />
+    </div>
+
+    {/* {product?.category ?
             <p className="categories">
                 <strong> Categories:</strong>
                 <Link href={`/category/${product?.category?._id}`}>
@@ -20,8 +30,8 @@ const ModuleProductDetailSpecification = ({ product }) => (
                 </Link>
             </p>
             : null
-        }
-        {/* <p className="tags">
+        } */}
+    {/* <p className="tags">
             <strong> Tags</strong>
             <Link href="/shop">
                 <a>sofa</a>
@@ -33,7 +43,7 @@ const ModuleProductDetailSpecification = ({ product }) => (
                 <a>wireless</a>
             </Link>
         </p> */}
-    </div >
-)
+  </div>
+);
 
-export default ModuleProductDetailSpecification
+export default ModuleProductDetailSpecification;

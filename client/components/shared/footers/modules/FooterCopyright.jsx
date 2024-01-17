@@ -25,7 +25,7 @@ const FooterCopyright = () => (
         </li>
     </ul> */}
     <p>
-      <span>We accept:</span>
+      <span>Supported Cryptocurrencies:</span>
       <a href='#'>
         <img
           src='/static/img/payment-method/bnb.png'

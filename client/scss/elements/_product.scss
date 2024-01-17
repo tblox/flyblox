@@ -1003,6 +1003,16 @@
   .ps-product__specification {
     margin-bottom: 10px;
 
+    .trust-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      & > img {
+        height: 48px;
+      }
+    }
+
     .report {
       text-decoration: underline;
     }
@@ -1499,7 +1509,7 @@
   }
 
   > .ps-product__content {
-    padding-top: 100px;
+    padding-top: 70px;
 
     .rating-box{
 
@@ -1577,7 +1587,7 @@
       display: none;
     }
     .ps-product__content {
-      padding-top: 100px;
+      padding-top: 70px;
     }
   }
 

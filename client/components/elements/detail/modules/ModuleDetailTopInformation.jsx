@@ -45,7 +45,8 @@ const ModuleDetailTopInformation = ({
         </div> */}
         <p>
           <b>Availablity:</b> {/* {productQuantity} */}
-          <span style={{ color: productQuantity > 0 ? '#7CC57A' : '#ef2626' }}>
+          {productQuantity > 0 && <span className='icon--pulsing'></span>} 
+          <span style={{ color: productQuantity > 0 ? '#7CC57A' : '#ef2626', marginLeft: '14px' }}>
             {productQuantity > 0 ? 'In Stock' : 'Out of Stock'}
           </span>
         </p>
@@ -109,7 +110,7 @@ const ModuleDetailTopInformation = ({
                   )}
                 </td>
                 <td width='60'>
-                  <strong>{priceInToken?.name}:</strong>
+                  <strong>{priceInToken?.name === "HEX" ? `e${priceInToken?.name}` : priceInToken?.name}:</strong>
                 </td>
                 <td>{toFixed(priceInToken?.amount, 8)}</td>
               </tr>

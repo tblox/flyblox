@@ -95,7 +95,7 @@
   }
 
   .header__center {
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.5);
     border-radius: 5px;
   }
 
@@ -411,12 +411,14 @@
 
     .navigation {
       height: 0;
+      display: none;
     }
 
     .navigation--product {
       padding: 10px 0;
       background-color: #fff;
       position: fixed;
+      display: block;
       top: 0;
       left: 0;
       width: 100%;

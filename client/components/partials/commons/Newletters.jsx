@@ -15,16 +15,15 @@ const Newsletters = ({ layout }) => (
         method='post'
       >
         <div className='row'>
-          <div className='col-xl-5 col-lg-12 col-md-12 col-sm-12 col-12 '>
+          <div className='col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 '>
             <div className='ps-form__left'>
               <h3 style={{ color: '#fff' }}>Newsletter</h3>
               <p style={{ color: '#fff' }}>
-                Subscribe to get information about products and
-                coupons
+                Stay informed for exclusive benefits on new products, promotions, discounts, and the latest technology updates
               </p>
             </div>
           </div>
-          <div className='col-xl-7 col-lg-12 col-md-12 col-sm-12 col-12 '>
+          <div className='col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 '>
             <div className='ps-form__right'>
               <div className='form-group--nest'>
                 <input
@@ -33,7 +32,7 @@ const Newsletters = ({ layout }) => (
                   placeholder='Email address'
                   style={{ backgroundColor: '#fff' }}
                 />
-                <button className='ps-btn'>Subscribe</button>
+                <button className='ps-btn' style={{ whiteSpace: 'nowrap'}}>Subscribe 👉</button>
               </div>
             </div>
           </div>
